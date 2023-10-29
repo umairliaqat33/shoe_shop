@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
 class RateFieldWidget extends StatefulWidget {
