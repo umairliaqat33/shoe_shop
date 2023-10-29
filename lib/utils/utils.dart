@@ -28,4 +28,12 @@ class Utils {
       return null;
     }
   }
+
+  static String? articleValidator(String? value) {
+    if (value!.isEmpty) {
+      return "User name required";
+    } else {
+      return null;
+    }
+  }
 }
