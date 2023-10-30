@@ -29,9 +29,9 @@ class Utils {
     }
   }
 
-  static String? articleValidator(String? value) {
+  static String? simpleValidator(String? value) {
     if (value!.isEmpty) {
-      return "User name required";
+      return "This field is required";
     } else {
       return null;
     }

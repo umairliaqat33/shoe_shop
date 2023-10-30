@@ -5,8 +5,11 @@ import 'package:shoe_shop/views/home_screen/home_screen.dart';
 import 'package:shoe_shop/views/profile_screen/profile_screen.dart';
 
 class BottomAppBarScreen extends StatefulWidget {
-  const BottomAppBarScreen({super.key});
-
+  const BottomAppBarScreen({
+    super.key,
+    this.screenIndex = 0,
+  });
+  final int screenIndex;
   @override
   State<BottomAppBarScreen> createState() => _BottomAppBarScreenState();
 }
@@ -19,6 +22,11 @@ class _BottomAppBarScreenState extends State<BottomAppBarScreen> {
   ];
   int _selectedIndex = 0;
   Color _fab = whiteColor;
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.screenIndex;
+  }
 
   @override
   Widget build(BuildContext context) {

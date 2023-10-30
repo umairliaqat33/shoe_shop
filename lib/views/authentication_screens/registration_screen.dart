@@ -29,7 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _passController = TextEditingController();
   final _userNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  // final AuthProvider _authProvider = AuthProvider();
+
   bool _showSpinner = false;
   @override
   Widget build(BuildContext context) {

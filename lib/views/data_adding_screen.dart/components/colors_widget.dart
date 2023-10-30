@@ -6,7 +6,7 @@ import 'package:shoe_shop/views/widgets/check_box_widgets/check_box_row_widget.d
 class ColorsWidget extends StatelessWidget {
   const ColorsWidget({
     super.key,
-    required List<Color> colorList,
+    required List<int> colorList,
     required this.blueCheckBox,
     required this.greenCheckBox,
     required this.blackCheckBox,
@@ -17,7 +17,7 @@ class ColorsWidget extends StatelessWidget {
     required this.whiteCheckBox,
   }) : _colorList = colorList;
 
-  final List<Color> _colorList;
+  final List<int> _colorList;
   final bool blueCheckBox;
   final bool greenCheckBox;
   final bool blackCheckBox;

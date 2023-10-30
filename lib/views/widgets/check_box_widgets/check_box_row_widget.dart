@@ -37,14 +37,14 @@ class _CheckBoxRowWidgetState extends State<CheckBoxRowWidget> {
                 widget.value = true;
               });
               widget.list.add(
-                widget.activeColor,
+                widget.activeColor.value,
               );
             } else {
               setState(() {
                 widget.value = false;
               });
               widget.list.removeWhere(
-                (element) => element == widget.activeColor,
+                (element) => element == widget.activeColor.value,
               );
             }
           },
