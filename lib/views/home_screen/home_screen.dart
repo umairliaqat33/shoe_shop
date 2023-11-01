@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
@@ -11,19 +12,8 @@ import 'package:shoe_shop/views/home_screen/components/article_card_widget.dart'
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final FirestoreController _firestoreController = FirestoreController();
-  List<String> sizeList = [
-    "size 1",
-    "size 2",
-    "size 3",
-    "size 4",
-    'size 5',
-  ];
-  List<int> colorList = [
-    10200,
-    40393,
-    028309,
-    028489,
-  ];
+  List<String> sizeList = [];
+  List<int> colorList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +45,7 @@ class HomeScreen extends StatelessWidget {
               left: SizeConfig.width8(context) * 2,
               right: SizeConfig.width8(context) * 2,
               top: SizeConfig.height8(context) * 2,
+              bottom: SizeConfig.height20(context) * 2,
             ),
             child: StreamBuilder<List<ShoeArticleModel?>>(
                 stream: _firestoreController.getArticleStreamList(),
@@ -97,6 +88,9 @@ class HomeScreen extends StatelessWidget {
                             articleMade: dataList[index]!.manufactureType,
                             sizeList: dataList[index]!.sizeList,
                             colorList: dataList[index]!.colorList,
+                            voidCallback: () => deleteArticle(
+                                dataList[index]!.articleNumber,
+                                dataList.length),
                           ),
                         ),
                       );
@@ -107,5 +101,12 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void deleteArticle(String id, int length) {
+    _firestoreController.deleteArticle(id);
+    if (length == length--) {
+      Fluttertoast.showToast(msg: "Article Deleted");
+    }
   }
 }

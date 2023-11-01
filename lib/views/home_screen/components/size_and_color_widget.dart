@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/views/home_screen/components/card_color_lower_widget.dart';
 import 'package:shoe_shop/views/home_screen/components/card_label_widget.dart';
-import 'package:shoe_shop/views/home_screen/components/card_sizes_widget.dart';
 
 class CardSizesAndColorsWidget extends StatelessWidget {
   const CardSizesAndColorsWidget({
@@ -28,60 +27,19 @@ class CardSizesAndColorsWidget extends StatelessWidget {
           SizedBox(
             height: SizeConfig.height8(context),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[0],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[1],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[2],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-              CardColorLowerWidget(
-                color: Color(
-                  colorList[3],
-                ),
-              ),
-            ],
+          SizedBox(
+            height: SizeConfig.height20(context),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: colorList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return CardColorLowerWidget(
+                  color: Color(
+                    colorList[index],
+                  ),
+                );
+              },
+            ),
           ),
           SizedBox(
             height: SizeConfig.height8(context),
@@ -94,8 +52,23 @@ class CardSizesAndColorsWidget extends StatelessWidget {
           SizedBox(
             height: SizeConfig.height8(context),
           ),
-          CardSizesWidget(
-            sizes: sizeList,
+          SizedBox(
+            height: SizeConfig.height20(context),
+            child: ListView.builder(
+              itemCount: sizeList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    left: 5,
+                    right: 5,
+                  ),
+                  child: Text(
+                    "• ${sizeList[index]}",
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

@@ -13,6 +13,10 @@ class CardColorLowerWidget extends StatelessWidget {
     return Container(
       width: 20,
       height: 20,
+      margin: const EdgeInsets.only(
+        left: 2.5,
+        right: 2.5,
+      ),
       decoration: BoxDecoration(
         color: color,
         border: Border.all(

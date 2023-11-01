@@ -43,4 +43,8 @@ class FirestoreController {
   Stream<List<ShoeArticleModel?>> getArticleStreamList() {
     return _firestoreRepository.getArticleStreamList();
   }
+
+  void deleteArticle(String id) {
+    _firestoreRepository.deleteArticle(id);
+  }
 }

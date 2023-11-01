@@ -14,6 +14,7 @@ class ArticleCardWidget extends StatelessWidget {
     required this.articleMade,
     required this.sizeList,
     required this.colorList,
+    required this.voidCallback,
   });
   final String articleName;
   final int articleRate;
@@ -21,16 +22,17 @@ class ArticleCardWidget extends StatelessWidget {
   final String articleMade;
   final List<String> sizeList;
   final List<int> colorList;
+  final VoidCallback voidCallback;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       children: [
         ArcticleCardUpperWidget(
-          articleNumber: "Article Numberd aytugdoiwekdewdt",
-          articleRate: 200,
-          articleQuantity: 20,
-          articleMade: ManufactureType.local.name,
+          articleNumber: articleName,
+          articleRate: articleRate,
+          articleQuantity: articleQuantity,
+          articleMade: checkArticleMade(),
         ),
         const Divider(
           color: lightGrey,
@@ -58,19 +60,19 @@ class ArticleCardWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => voidCallback(),
                         icon: const Icon(
                           Icons.delete_rounded,
                           color: lightGrey,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.edit,
-                          color: lightGrey,
-                        ),
-                      ),
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   icon: const Icon(
+                      //     Icons.edit,
+                      //     color: lightGrey,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -80,5 +82,15 @@ class ArticleCardWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String checkArticleMade() {
+    if (articleMade == ManufactureType.local.name) {
+      return "Local";
+    } else if (articleMade == ManufactureType.semiChinaMade.name) {
+      return "Semi China Made";
+    } else {
+      return "China Made";
+    }
   }
 }

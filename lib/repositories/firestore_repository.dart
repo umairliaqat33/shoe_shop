@@ -65,4 +65,13 @@ class FirestoreRepository {
               .toList(),
         );
   }
+
+  void deleteArticle(String id) {
+    CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .collection(CollectionsNames.articleCollection)
+        .doc(id)
+        .delete();
+  }
 }

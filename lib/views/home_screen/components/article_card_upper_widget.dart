@@ -21,28 +21,27 @@ class ArcticleCardUpperWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: Text(
-            articleNumber,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              overflow: TextOverflow.clip,
-            ),
-          ),
-        ),
-        const VerticalDivider(
-          thickness: 10,
-        ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              articleNumber,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             const CardLabelWidget(
               label: 'Rate:',
             ),
             CardUpperValueWidget(
               rate: articleRate.toString(),
             ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             const CardLabelWidget(
               label: 'Quantity:',
             ),

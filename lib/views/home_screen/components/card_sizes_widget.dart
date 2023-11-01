@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoe_shop/config/size_config.dart';
 
 class CardSizesWidget extends StatelessWidget {
   const CardSizesWidget({
@@ -9,34 +10,16 @@ class CardSizesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 10,
-      children: [
-        Text(
-          "• ${sizes[0]}",
-        ),
-        Text(
-          "• ${sizes[1]}",
-        ),
-        Text(
-          "• ${sizes[2]}",
-        ),
-        Text(
-          "• ${sizes[2]}",
-        ),
-        Text(
-          "• ${sizes[2]}",
-        ),
-        Text(
-          "• ${sizes[2]}",
-        ),
-        Text(
-          "• ${sizes[2]}",
-        ),
-        Text(
-          "• ${sizes[2]}",
-        ),
-      ],
+    return SizedBox(
+      height: SizeConfig.height20(context),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) {
+          return Text(
+            "• ${sizes[index]}",
+          );
+        },
+      ),
     );
   }
 }
