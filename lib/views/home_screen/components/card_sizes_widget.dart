@@ -22,19 +22,19 @@ class CardSizesWidget extends StatelessWidget {
           "• ${sizes[2]}",
         ),
         Text(
-          "• ${sizes[3]}",
+          "• ${sizes[2]}",
         ),
         Text(
-          "• ${sizes[4]}",
+          "• ${sizes[2]}",
         ),
         Text(
-          "• ${sizes[4]}",
+          "• ${sizes[2]}",
         ),
         Text(
-          "• ${sizes[4]}",
+          "• ${sizes[2]}",
         ),
         Text(
-          "• ${sizes[4]}",
+          "• ${sizes[2]}",
         ),
       ],
     );

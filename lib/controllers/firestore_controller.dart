@@ -39,4 +39,8 @@ class FirestoreController {
       }
     }
   }
+
+  Stream<List<ShoeArticleModel?>> getArticleStreamList() {
+    return _firestoreRepository.getArticleStreamList();
+  }
 }

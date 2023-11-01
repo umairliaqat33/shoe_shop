@@ -16,7 +16,7 @@ class BottomAppBarScreen extends StatefulWidget {
 
 class _BottomAppBarScreenState extends State<BottomAppBarScreen> {
   final List<Widget> _widgetList = [
-    const HomeScreen(),
+    HomeScreen(),
     const DataAddingScreen(),
     const ProfileScreen(),
   ];

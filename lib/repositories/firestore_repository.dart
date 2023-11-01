@@ -48,4 +48,21 @@ class FirestoreRepository {
       }
     }
   }
+
+  Stream<List<ShoeArticleModel?>> getArticleStreamList() {
+    return CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .collection(CollectionsNames.articleCollection)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => ShoeArticleModel.fromJson(
+                  doc.data(),
+                ),
+              )
+              .toList(),
+        );
+  }
 }
