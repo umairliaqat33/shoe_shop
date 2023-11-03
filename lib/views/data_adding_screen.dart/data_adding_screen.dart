@@ -17,7 +17,11 @@ import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
 class DataAddingScreen extends StatefulWidget {
-  const DataAddingScreen({super.key});
+  const DataAddingScreen({
+    super.key,
+    this.shoeArticleModel,
+  });
+  final ShoeArticleModel? shoeArticleModel;
 
   @override
   State<DataAddingScreen> createState() => _DataAddingScreenState();
@@ -29,15 +33,15 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
   final TextEditingController _quantityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool blueCheckBox = false;
-  bool blackCheckBox = false;
-  bool redCheckBox = false;
-  bool greenCheckBox = false;
-  bool offWhiteCheckBox = false;
-  bool yellowCheckBox = false;
-  bool greyCheckBox = false;
-  bool pinkCheckBox = false;
-  bool whiteCheckBox = false;
+  bool _blueCheckBox = false;
+  bool _blackCheckBox = false;
+  bool _redCheckBox = false;
+  bool _greenCheckBox = false;
+  bool _offWhiteCheckBox = false;
+  bool _yellowCheckBox = false;
+  bool _greyCheckBox = false;
+  bool _pinkCheckBox = false;
+  bool _whiteCheckBox = false;
   bool _isColorListEmpty = false;
   bool _isSizeListEmpty = false;
   bool _ismanufactureEmpty = false;
@@ -45,12 +49,12 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
 
   final List<int> _colorList = [];
   final List<String> _sizeList = [];
-  final bool _size2125 = false;
-  final bool _size2630 = false;
-  final bool _size3136 = false;
-  final bool _size3237 = false;
-  final bool _size3641 = false;
-  final bool _size1519 = false;
+  bool _size2125 = false;
+  bool _size2630 = false;
+  bool _size3136 = false;
+  bool _size3237 = false;
+  bool _size3641 = false;
+  bool _size1519 = false;
 
   bool _localBoxType = false;
   bool _chinaBoxType = false;
@@ -221,14 +225,15 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                   ),
                   ColorsWidget(
                     colorList: _colorList,
-                    blueCheckBox: blueCheckBox,
-                    greenCheckBox: greenCheckBox,
-                    blackCheckBox: blackCheckBox,
-                    redCheckBox: redCheckBox,
-                    yellowCheckBox: yellowCheckBox,
-                    offWhiteCheckBox: offWhiteCheckBox,
-                    pinkCheckBox: pinkCheckBox,
-                    whiteCheckBox: whiteCheckBox,
+                    blueCheckBox: _blueCheckBox,
+                    greenCheckBox: _greenCheckBox,
+                    blackCheckBox: _blackCheckBox,
+                    redCheckBox: _redCheckBox,
+                    yellowCheckBox: _yellowCheckBox,
+                    offWhiteCheckBox: _offWhiteCheckBox,
+                    pinkCheckBox: _pinkCheckBox,
+                    whiteCheckBox: _whiteCheckBox,
+                    greyCheckBox: _greyCheckBox,
                   ),
                   SizedBox(
                     height: SizeConfig.height8(context),
@@ -360,5 +365,53 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
         _ismanufactureEmpty = false;
       });
     }
+  }
+
+  void setValuesFromModel() {
+    ShoeArticleModel shoeArticleModel = widget.shoeArticleModel!;
+    _checkColorListFromModel(shoeArticleModel.colorList);
+    _checkSizeListFromModel(shoeArticleModel.sizeList);
+  }
+
+  void _checkColorListFromModel(List<int> colorList) {
+    setState(() {
+      if (colorList.contains(blackColor.value)) {
+        _blackCheckBox = true;
+      } else if (colorList.contains(blueColor.value)) {
+        _blueCheckBox = true;
+      } else if (colorList.contains(redColor.value)) {
+        _redCheckBox = true;
+      } else if (colorList.contains(greenColor.value)) {
+        _greenCheckBox = true;
+      } else if (colorList.contains(yellowColor.value)) {
+        _yellowCheckBox = true;
+      } else if (colorList.contains(greyColor.value)) {
+        _greyCheckBox = true;
+      } else if (colorList.contains(offWhiteColor.value)) {
+        _offWhiteCheckBox = true;
+      } else if (colorList.contains(pinkColor.value)) {
+        _pinkCheckBox = true;
+      } else if (colorList.contains(whiteColor.value)) {
+        _whiteCheckBox = true;
+      }
+    });
+  }
+
+  void _checkSizeListFromModel(List<String> sizeList) {
+    setState(() {
+      if (sizeList.contains('21/25')) {
+        _size2125 = true;
+      } else if (sizeList.contains('26/30')) {
+        _size2630 = true;
+      } else if (sizeList.contains('31/36')) {
+        _size3136 = true;
+      } else if (sizeList.contains('32/37')) {
+        _size3237 = true;
+      } else if (sizeList.contains('36/41')) {
+        _size3641 = true;
+      } else if (sizeList.contains('15/19')) {
+        _size1519 = true;
+      }
+    });
   }
 }

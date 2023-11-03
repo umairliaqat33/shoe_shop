@@ -15,6 +15,7 @@ class ColorsWidget extends StatelessWidget {
     required this.offWhiteCheckBox,
     required this.pinkCheckBox,
     required this.whiteCheckBox,
+    required this.greyCheckBox,
   }) : _colorList = colorList;
 
   final List<int> _colorList;
@@ -26,6 +27,7 @@ class ColorsWidget extends StatelessWidget {
   final bool offWhiteCheckBox;
   final bool pinkCheckBox;
   final bool whiteCheckBox;
+  final bool greyCheckBox;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,7 @@ class ColorsWidget extends StatelessWidget {
                   CheckBoxRowWidget(
                     boxName: "Grey",
                     list: _colorList,
-                    value: greenCheckBox,
+                    value: greyCheckBox,
                     activeColor: greyColor,
                     checkColor: whiteColor,
                   ),

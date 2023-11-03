@@ -47,4 +47,8 @@ class FirestoreController {
   void deleteArticle(String id) {
     _firestoreRepository.deleteArticle(id);
   }
+
+  Future<UserModel> getUserData() {
+    return _firestoreRepository.getUserData();
+  }
 }

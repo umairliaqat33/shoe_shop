@@ -6,6 +6,7 @@ import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/authentication_screens/login_screen.dart';
+import 'package:shoe_shop/views/data_adding_screen.dart/data_adding_screen.dart';
 import 'package:shoe_shop/views/home_screen/components/article_card_widget.dart';
 
 // ignore: must_be_immutable
@@ -70,9 +71,9 @@ class HomeScreen extends StatelessWidget {
                       ],
                     );
                   }
-                  List<ShoeArticleModel?>? dataList = snapshot.data;
+                  List<ShoeArticleModel?>? shoeArticleModelList = snapshot.data;
                   return ListView.builder(
-                    itemCount: dataList!.length,
+                    itemCount: shoeArticleModelList!.length,
                     itemBuilder: (
                       BuildContext context,
                       int index,
@@ -82,15 +83,22 @@ class HomeScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(SizeConfig.height8(context)),
                           child: ArticleCardWidget(
-                            articleName: dataList[index]!.articleNumber,
-                            articleRate: dataList[index]!.rate,
-                            articleQuantity: dataList[index]!.quantity,
-                            articleMade: dataList[index]!.manufactureType,
-                            sizeList: dataList[index]!.sizeList,
-                            colorList: dataList[index]!.colorList,
-                            voidCallback: () => deleteArticle(
-                                dataList[index]!.articleNumber,
-                                dataList.length),
+                            articleName:
+                                shoeArticleModelList[index]!.articleNumber,
+                            articleRate: shoeArticleModelList[index]!.rate,
+                            articleQuantity:
+                                shoeArticleModelList[index]!.quantity,
+                            articleMade:
+                                shoeArticleModelList[index]!.manufactureType,
+                            sizeList: shoeArticleModelList[index]!.sizeList,
+                            colorList: shoeArticleModelList[index]!.colorList,
+                            deleteFunction: () => deleteArticle(
+                                shoeArticleModelList[index]!.articleNumber,
+                                shoeArticleModelList.length),
+                            editFunction: () => editArticle(
+                              context,
+                              shoeArticleModelList[index]!,
+                            ),
                           ),
                         ),
                       );
@@ -108,5 +116,18 @@ class HomeScreen extends StatelessWidget {
     if (length == length--) {
       Fluttertoast.showToast(msg: "Article Deleted");
     }
+  }
+
+  void editArticle(
+    BuildContext context,
+    ShoeArticleModel shoeArticleModel,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DataAddingScreen(
+          shoeArticleModel: shoeArticleModel,
+        ),
+      ),
+    );
   }
 }

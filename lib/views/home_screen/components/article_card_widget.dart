@@ -14,7 +14,8 @@ class ArticleCardWidget extends StatelessWidget {
     required this.articleMade,
     required this.sizeList,
     required this.colorList,
-    required this.voidCallback,
+    required this.deleteFunction,
+    required this.editFunction,
   });
   final String articleName;
   final int articleRate;
@@ -22,7 +23,8 @@ class ArticleCardWidget extends StatelessWidget {
   final String articleMade;
   final List<String> sizeList;
   final List<int> colorList;
-  final VoidCallback voidCallback;
+  final VoidCallback deleteFunction;
+  final VoidCallback editFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -60,19 +62,19 @@ class ArticleCardWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       IconButton(
-                        onPressed: () => voidCallback(),
+                        onPressed: () => deleteFunction(),
                         icon: const Icon(
                           Icons.delete_rounded,
                           color: lightGrey,
                         ),
                       ),
-                      // IconButton(
-                      //   onPressed: () {},
-                      //   icon: const Icon(
-                      //     Icons.edit,
-                      //     color: lightGrey,
-                      //   ),
-                      // ),
+                      IconButton(
+                        onPressed: () => editFunction(),
+                        icon: const Icon(
+                          Icons.edit,
+                          color: lightGrey,
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -74,4 +74,14 @@ class FirestoreRepository {
         .doc(id)
         .delete();
   }
+
+  Future<UserModel> getUserData() async {
+    return CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .get()
+        .then(
+          (value) => UserModel.fromJson(value.data()!),
+        );
+  }
 }
