@@ -51,4 +51,23 @@ class FirestoreController {
   Future<UserModel> getUserData() {
     return _firestoreRepository.getUserData();
   }
+
+  void updateShoeArticle(
+    ShoeArticleModel shoeArticleModel,
+    String docId,
+  ) async {
+    try {
+      _firestoreRepository.updateArticleData(
+        shoeArticleModel,
+        docId,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
+  }
 }

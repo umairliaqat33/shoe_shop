@@ -60,12 +60,12 @@ class SizeCheckBoxColumnWidget extends StatelessWidget {
                 SizeCheckBoxWidget(
                   list: _sizeList,
                   value: _size2125,
-                  boxName: '21 / 25',
+                  boxName: '21/25',
                 ),
                 SizeCheckBoxWidget(
                   list: _sizeList,
                   value: _size2630,
-                  boxName: '26 / 30',
+                  boxName: '26/30',
                 ),
               ],
             ),
@@ -75,12 +75,12 @@ class SizeCheckBoxColumnWidget extends StatelessWidget {
                 SizeCheckBoxWidget(
                   list: _sizeList,
                   value: _size3136,
-                  boxName: '31 / 36',
+                  boxName: '31/36',
                 ),
                 SizeCheckBoxWidget(
                   list: _sizeList,
                   value: _size3237,
-                  boxName: '32 / 37',
+                  boxName: '32/37',
                 ),
               ],
             ),
@@ -90,12 +90,12 @@ class SizeCheckBoxColumnWidget extends StatelessWidget {
                 SizeCheckBoxWidget(
                   list: _sizeList,
                   value: _size3641,
-                  boxName: '36 / 41',
+                  boxName: '36/41',
                 ),
                 SizeCheckBoxWidget(
                   list: _sizeList,
                   value: _size1519,
-                  boxName: '15 / 19',
+                  boxName: '15/19',
                 ),
               ],
             ),

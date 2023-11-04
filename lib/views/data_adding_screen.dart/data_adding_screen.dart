@@ -47,8 +47,8 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
   bool _ismanufactureEmpty = false;
   bool _showSpinner = false;
 
-  final List<int> _colorList = [];
-  final List<String> _sizeList = [];
+  List<int> _colorList = [];
+  List<String> _sizeList = [];
   bool _size2125 = false;
   bool _size2630 = false;
   bool _size3136 = false;
@@ -60,6 +60,14 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
   bool _chinaBoxType = false;
   bool _semiChinaBoxType = false;
   String _manufactureType = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.shoeArticleModel != null) {
+      _setValuesFromModel(widget.shoeArticleModel);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +279,9 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                           width: double.infinity,
                           child: RoundedButton(
                             color: Theme.of(context).primaryColor,
-                            onPressed: () => submitArticleData(),
+                            onPressed: () => widget.shoeArticleModel == null
+                                ? submitArticleData()
+                                : updateArticleData(),
                             title: 'Done',
                           ),
                         ),
@@ -367,31 +377,47 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
     }
   }
 
-  void setValuesFromModel() {
-    ShoeArticleModel shoeArticleModel = widget.shoeArticleModel!;
+  void _setValuesFromModel(ShoeArticleModel? shoeArticle) {
+    ShoeArticleModel shoeArticleModel = shoeArticle!;
     _checkColorListFromModel(shoeArticleModel.colorList);
     _checkSizeListFromModel(shoeArticleModel.sizeList);
+    _checkManufactureFromModel(shoeArticleModel.manufactureType);
+    setState(() {
+      _articleController.text = shoeArticleModel.articleNumber;
+      _quantityController.text = shoeArticleModel.quantity.toString();
+      _rateController.text = shoeArticleModel.rate.toString();
+      _sizeList = shoeArticleModel.sizeList;
+      _colorList = shoeArticleModel.colorList;
+    });
   }
 
   void _checkColorListFromModel(List<int> colorList) {
     setState(() {
       if (colorList.contains(blackColor.value)) {
         _blackCheckBox = true;
-      } else if (colorList.contains(blueColor.value)) {
+      }
+      if (colorList.contains(blueColor.value)) {
         _blueCheckBox = true;
-      } else if (colorList.contains(redColor.value)) {
+      }
+      if (colorList.contains(redColor.value)) {
         _redCheckBox = true;
-      } else if (colorList.contains(greenColor.value)) {
+      }
+      if (colorList.contains(greenColor.value)) {
         _greenCheckBox = true;
-      } else if (colorList.contains(yellowColor.value)) {
+      }
+      if (colorList.contains(yellowColor.value)) {
         _yellowCheckBox = true;
-      } else if (colorList.contains(greyColor.value)) {
+      }
+      if (colorList.contains(greyColor.value)) {
         _greyCheckBox = true;
-      } else if (colorList.contains(offWhiteColor.value)) {
+      }
+      if (colorList.contains(offWhiteColor.value)) {
         _offWhiteCheckBox = true;
-      } else if (colorList.contains(pinkColor.value)) {
+      }
+      if (colorList.contains(pinkColor.value)) {
         _pinkCheckBox = true;
-      } else if (colorList.contains(whiteColor.value)) {
+      }
+      if (colorList.contains(whiteColor.value)) {
         _whiteCheckBox = true;
       }
     });
@@ -401,17 +427,94 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
     setState(() {
       if (sizeList.contains('21/25')) {
         _size2125 = true;
-      } else if (sizeList.contains('26/30')) {
+      }
+      if (sizeList.contains('26/30')) {
         _size2630 = true;
-      } else if (sizeList.contains('31/36')) {
+      }
+      if (sizeList.contains('31/36')) {
         _size3136 = true;
-      } else if (sizeList.contains('32/37')) {
+      }
+      if (sizeList.contains('32/37')) {
         _size3237 = true;
-      } else if (sizeList.contains('36/41')) {
+      }
+      if (sizeList.contains('36/41')) {
         _size3641 = true;
-      } else if (sizeList.contains('15/19')) {
+      }
+      if (sizeList.contains('15/19')) {
         _size1519 = true;
       }
+    });
+  }
+
+  void _checkManufactureFromModel(String articleMade) {
+    setState(() {
+      if (articleMade == ManufactureType.local.name) {
+        _manufactureType = articleMade;
+        _localBoxType = true;
+        _chinaBoxType = false;
+        _semiChinaBoxType = false;
+      }
+      if (articleMade == ManufactureType.chinaMade.name) {
+        _manufactureType = articleMade;
+        _localBoxType = false;
+        _chinaBoxType = true;
+        _semiChinaBoxType = false;
+      }
+      if (articleMade == ManufactureType.semiChinaMade.name) {
+        _manufactureType = articleMade;
+        _localBoxType = false;
+        _chinaBoxType = false;
+        _semiChinaBoxType = true;
+      }
+    });
+  }
+
+  void updateArticleData() {
+    final FirestoreController firestoreController = FirestoreController();
+    setState(() {
+      _showSpinner = true;
+    });
+    try {
+      _checkColorsList();
+      _checkManufacture();
+      _checkSizeList();
+      if (_formKey.currentState!.validate()) {
+        firestoreController.updateShoeArticle(
+          ShoeArticleModel(
+            articleNumber: _articleController.text,
+            quantity: int.parse(_quantityController.text),
+            sizeList: _sizeList,
+            manufactureType: _manufactureType,
+            rate: int.parse(_rateController.text),
+            colorList: _colorList,
+          ),
+          widget.shoeArticleModel!.articleNumber,
+        );
+        Fluttertoast.showToast(msg: "Article Data Updated");
+        _sizeList.clear();
+        _colorList.clear();
+        setState(() {
+          _manufactureType = '';
+          _articleController.clear();
+          _rateController.clear();
+          _quantityController.clear();
+        });
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const BottomAppBarScreen(
+              screenIndex: 0,
+            ),
+          ),
+          (route) => false,
+        );
+      }
+    } on UnknownException catch (e) {
+      Fluttertoast.showToast(msg: e.message);
+      log("Data updating failed");
+      Fluttertoast.showToast(msg: 'Data updating failed');
+    }
+    setState(() {
+      _showSpinner = false;
     });
   }
 }

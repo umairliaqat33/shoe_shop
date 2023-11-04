@@ -84,4 +84,24 @@ class FirestoreRepository {
           (value) => UserModel.fromJson(value.data()!),
         );
   }
+
+  void updateArticleData(ShoeArticleModel shoeArticleModel, String docId) {
+    try {
+      CollectionsNames.firestoreCollection
+          .collection(CollectionsNames.usersCollection)
+          .doc(_user!.uid)
+          .collection(CollectionsNames.articleCollection)
+          .doc(docId)
+          .update(
+            shoeArticleModel.toJson(),
+          );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
+  }
 }
