@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoe_shop/views/home_screen/components/card_label_widget.dart';
-import 'package:shoe_shop/views/home_screen/components/card_rate_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/card_label_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/card_rate_widget.dart';
 
 class ArcticleCardUpperWidget extends StatelessWidget {
   const ArcticleCardUpperWidget({

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/constants/text_field_decoration.dart';
+import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/utils.dart';
 
 class PasswordTextField extends StatefulWidget {
@@ -46,12 +47,12 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
               },
               icon: _textVisible
                   ? Image.asset(
-                      'assets/password_visibility_off.png',
+                      Assets.passwordVisibilityOff,
                       height: 20,
                       width: 20,
                     )
                   : Image.asset(
-                      'assets/password_visibility_on.png',
+                      Assets.passwordVisibilityOn,
                       height: 20,
                       width: 20,
                     ),

@@ -4,8 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
-import 'package:shoe_shop/views/authentication_screens/login_screen.dart';
-import 'package:shoe_shop/views/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shoe_shop/repositories/auth_repository.dart';
+import 'package:shoe_shop/utils/assets.dart';
+import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
+import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _createSplash();
-    getUserData();
+    if (AuthRepository.userLoginStatus()) {
+      getUserData();
+    }
   }
 
   Future<void> getUserData() async {
@@ -34,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: SizedBox(
           height: 300.0,
-          child: Image.asset('assets/logo.png'),
+          child: Image.asset(Assets.logo),
         ),
       ),
     );

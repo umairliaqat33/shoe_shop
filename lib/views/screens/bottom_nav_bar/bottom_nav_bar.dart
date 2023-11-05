@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/utils/colors.dart';
-import 'package:shoe_shop/views/data_adding_screen.dart/data_adding_screen.dart';
-import 'package:shoe_shop/views/home_screen/home_screen.dart';
-import 'package:shoe_shop/views/profile_screen/profile_screen.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/data_adding_screen.dart';
+import 'package:shoe_shop/views/screens/home_screen/home_screen.dart';
+import 'package:shoe_shop/views/screens/profile_screen/profile_screen.dart';
 
 class BottomAppBarScreen extends StatefulWidget {
   const BottomAppBarScreen({

@@ -4,13 +4,13 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel {
-  String userName;
+  String businessName;
   String email;
   String? uid;
 
   UserModel({
     required this.email,
-    required this.userName,
+    required this.businessName,
     this.uid,
   });
 

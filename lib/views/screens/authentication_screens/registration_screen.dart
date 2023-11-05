@@ -9,10 +9,11 @@ import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/auth_controller.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
+import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/authentication_screens/login_screen.dart';
-import 'package:shoe_shop/views/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
+import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/password_text_field.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
@@ -27,7 +28,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
-  final _userNameController = TextEditingController();
+  final _businessNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   bool _showSpinner = false;
@@ -49,15 +50,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 children: <Widget>[
                   SizedBox(
                     height: SizeConfig.height15(context) * 10,
-                    child: Image.asset('assets/logo.png'),
+                    child: Image.asset(Assets.logo),
                   ),
                   SizedBox(
                     height: SizeConfig.height18(context) * 3,
                   ),
                   TextFormFieldWidget(
-                    lable: 'User Name',
-                    controller: _userNameController,
-                    validator: (value) => Utils.userNameValidator(value),
+                    lable: 'Business Name',
+                    controller: _businessNameController,
+                    validator: (value) => Utils.businessNameValidator(value),
                     hintText: "John Doe",
                     inputType: TextInputType.name,
                     inputAction: TextInputAction.next,
@@ -145,7 +146,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         firestoreController.uploadUserInformation(
           UserModel(
             email: _emailController.text,
-            userName: _userNameController.text,
+            businessName: _businessNameController.text,
             uid: userCredential!.user?.uid,
           ),
         );

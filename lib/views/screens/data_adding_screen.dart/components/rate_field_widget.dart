@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/utils/colors.dart';
+import 'package:shoe_shop/utils/constants.dart';
 import 'package:shoe_shop/utils/utils.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
@@ -49,9 +50,12 @@ class _RateFieldWidgetState extends State<RateFieldWidget> {
                 splashFactory:
                     NoSplash.splashFactory //removing onClick splash color
                 ),
-            child: Image.asset(
-              'assets/minus.png',
-              height: SizeConfig.height10(context),
+            child: Text(
+              decrementSymbol,
+              style: TextStyle(
+                fontSize: SizeConfig.font24(context),
+                color: lightGrey,
+              ),
             ),
           ),
         ),
@@ -79,9 +83,12 @@ class _RateFieldWidgetState extends State<RateFieldWidget> {
                 splashFactory:
                     NoSplash.splashFactory //removing onClick splash color
                 ),
-            child: const Icon(
-              Icons.add,
-              color: lightGrey,
+            child: Text(
+              incrementSymbol,
+              style: TextStyle(
+                fontSize: SizeConfig.font24(context),
+                color: lightGrey,
+              ),
             ),
           ),
         ),

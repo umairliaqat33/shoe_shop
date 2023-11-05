@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/auth_controller.dart';
+import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/authentication_screens/registration_screen.dart';
-import 'package:shoe_shop/views/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shoe_shop/views/screens/authentication_screens/registration_screen.dart';
+import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/password_text_field.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
@@ -46,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   SizedBox(
                     height: SizeConfig.height15(context) * 10,
-                    child: Image.asset('assets/logo.png'),
+                    child: Image.asset(Assets.logo),
                   ),
                   SizedBox(
                     height: SizeConfig.height18(context) * 3,

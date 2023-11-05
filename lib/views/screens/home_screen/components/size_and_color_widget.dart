@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
-import 'package:shoe_shop/views/home_screen/components/card_color_lower_widget.dart';
-import 'package:shoe_shop/views/home_screen/components/card_label_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/card_color_lower_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/card_label_widget.dart';
 
 class CardSizesAndColorsWidget extends StatelessWidget {
   const CardSizesAndColorsWidget({

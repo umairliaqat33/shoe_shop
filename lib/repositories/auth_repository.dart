@@ -48,4 +48,15 @@ class AuthRepository {
     }
     return userCredential;
   }
+
+  void deleteUserAccount(String s) {}
+
+  static bool userLoginStatus() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

@@ -54,6 +54,7 @@ class FirestoreRepository {
         .collection(CollectionsNames.usersCollection)
         .doc(_user!.uid)
         .collection(CollectionsNames.articleCollection)
+        .orderBy('quantity')
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
@@ -103,5 +104,10 @@ class FirestoreRepository {
             "${AppStrings.wentWrong} ${e.code} ${e.message}");
       }
     }
+  }
+
+  static User? checkUser() {
+    User? user = CollectionsNames.firebaseAuth.currentUser;
+    return user;
   }
 }

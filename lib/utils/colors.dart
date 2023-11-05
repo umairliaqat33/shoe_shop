@@ -10,3 +10,5 @@ const Color blueColor = Color(0xff0000ff);
 const Color greenColor = Color(0xff008000);
 const Color offWhiteColor = Color(0xffffd699);
 const Color pinkColor = Color(0xffffc0cb);
+const Color appTextColor = Color(0xFF17272E);
+const Color backgroundColor = Color(0xffF8FBFF);

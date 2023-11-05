@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/enums.dart';
-import 'package:shoe_shop/views/home_screen/components/article_card_upper_widget.dart';
-import 'package:shoe_shop/views/home_screen/components/size_and_color_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/article_card_upper_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/size_and_color_widget.dart';
 
 class ArticleCardWidget extends StatelessWidget {
   const ArticleCardWidget({

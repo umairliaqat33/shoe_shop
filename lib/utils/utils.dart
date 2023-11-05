@@ -21,9 +21,9 @@ class Utils {
     }
   }
 
-  static String? userNameValidator(String? value) {
+  static String? businessNameValidator(String? value) {
     if (value!.isEmpty) {
-      return "User name required";
+      return "Business name required";
     } else {
       return null;
     }

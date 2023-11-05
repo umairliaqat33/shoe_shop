@@ -9,10 +9,10 @@ import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/enums.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:shoe_shop/views/data_adding_screen.dart/components/colors_widget.dart';
-import 'package:shoe_shop/views/data_adding_screen.dart/components/rate_field_widget.dart';
-import 'package:shoe_shop/views/data_adding_screen.dart/components/size_check_box_widget.dart';
+import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/colors_widget.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/rate_field_widget.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_check_box_widget.dart';
 import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
