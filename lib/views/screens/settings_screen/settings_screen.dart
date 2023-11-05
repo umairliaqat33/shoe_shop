@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
+import 'package:shoe_shop/controllers/auth_controller.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
-import 'package:shoe_shop/repositories/auth_repository.dart';
 import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
@@ -26,23 +26,10 @@ class SettingsScreen extends StatelessWidget {
     log("Height: ${SizeConfig.height(context)}");
 
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size(
-      //     double.infinity,
-      //     (SizeConfig.height12(context) * 4),
-      //   ),
-      //   child: BackArrowAppbar(
-      //     fontSize: 18,
-      //     textColor: appTextColor,
-      //     text: 'Settings',
-      //     picture: Assets.arrowBack,
-      //     onPressed: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //     appBarColor: backgroundColor,
-      //     elevation: 1,
-      //   ),
-      // ),
+      appBar: AppBar(
+        title: const Text("Edit Profile"),
+        centerTitle: true,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,10 +60,8 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 onDeleteTap: () {
-                  AuthRepository authRepository = AuthRepository();
-                  authRepository.deleteUserAccount(
-                    userModel!.uid!,
-                  );
+                  AuthController authController = AuthController();
+                  authController.deleteUserAccountAndData();
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()),

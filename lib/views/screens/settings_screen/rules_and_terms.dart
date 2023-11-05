@@ -5,8 +5,12 @@ class RulesAndTermsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Roles and terms"),
+        centerTitle: true,
+      ),
+      body: const Center(
         child: Text(
           "Rules and terms screen",
         ),

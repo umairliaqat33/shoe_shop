@@ -11,6 +11,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.inputType = TextInputType.text,
     this.inputAction = TextInputAction.next,
     this.textAlign = TextAlign.left,
+    this.fieldEnabled = true,
   });
   final TextEditingController controller;
   final String hintText;
@@ -19,6 +20,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final TextInputAction inputAction;
   final FormFieldValidator validator;
   final TextAlign textAlign;
+  final bool fieldEnabled;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,6 +36,7 @@ class TextFormFieldWidget extends StatelessWidget {
           height: SizeConfig.height8(context),
         ),
         TextFormField(
+          enabled: fieldEnabled,
           controller: controller,
           textInputAction: inputAction,
           keyboardType: inputType,

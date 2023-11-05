@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shoe_shop/repositories/firestore_repository.dart';
+import 'package:shoe_shop/utils/collection_names.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/strings.dart';
 
@@ -49,7 +51,12 @@ class AuthRepository {
     return userCredential;
   }
 
-  void deleteUserAccount(String s) {}
+  void deleteUserAccount() {
+    FirestoreRepository firestoreRepository = FirestoreRepository();
+    CollectionsNames.firebaseAuth.signOut();
+    CollectionsNames.firebaseAuth.currentUser?.delete();
+    firestoreRepository.deleteUserData();
+  }
 
   static bool userLoginStatus() {
     User? user = FirebaseAuth.instance.currentUser;

@@ -23,4 +23,8 @@ class AuthController {
       password,
     );
   }
+
+  void deleteUserAccountAndData() {
+    _authRepository.deleteUserAccount();
+  }
 }

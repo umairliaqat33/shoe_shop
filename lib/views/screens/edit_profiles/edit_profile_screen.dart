@@ -7,15 +7,17 @@ import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
+import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/services/media_service.dart';
+import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shoe_shop/views/widgets/image_picker_widgets/image_picker_big_widget.dart';
 import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final userData;
+  final UserModel userData;
   const EditProfileScreen({
     super.key,
     required this.userData,
@@ -26,14 +28,12 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _businessNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   PlatformFile? _profilePlatformFile;
   final _formKey = GlobalKey<FormState>();
   String? _imageLink;
   bool _btnSpinner = false;
-  // ignore: unused_field
-  UserModel? _userModel;
 
   @override
   void initState() {
@@ -44,23 +44,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size(
-      //     double.infinity,
-      //     (SizeConfig.height12(context) * 4),
-      //   ),
-      //   child: BackArrowAppbar(
-      //     fontSize: 18,
-      //     textColor: appTextColor,
-      //     text: 'Edit Profile',
-      //     picture: Assets.arrowBack,
-      //     onPressed: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //     appBarColor: backgroundColor,
-      //     elevation: 1,
-      //   ),
-      // ),
+      appBar: AppBar(
+        title: const Text("Edit Profile"),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: EdgeInsets.only(
           top: SizeConfig.height12(context),
@@ -90,9 +77,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       TextFormFieldWidget(
                         hintText: "Business name",
-                        controller: _nameController,
+                        controller: _businessNameController,
                         validator: (value) {
-                          if (_nameController.text.isEmpty) {
+                          if (_businessNameController.text.isEmpty) {
                             return "Full name required";
                           }
                           return null;
@@ -103,11 +90,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         height: SizeConfig.height12(context),
                       ),
                       TextFormFieldWidget(
+                        fieldEnabled: false,
                         lable: "Email",
                         hintText: "Email",
                         controller: _emailController,
                         validator: (value) {
-                          if (_nameController.text.isEmpty) {
+                          if (_businessNameController.text.isEmpty) {
                             return "Email required";
                           }
                           return null;
@@ -128,14 +116,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   )
                 : Padding(
                     padding: EdgeInsets.only(
-                        // top: (SizeConfig.height20(context) * 16),
-                        left: (SizeConfig.width8(context) * 2),
-                        right: (SizeConfig.width8(context) * 2),
+                        top: (SizeConfig.height20(context)),
+                        // left: (SizeConfig.width8(context) * 2),
+                        // right: (SizeConfig.width8(context) * 2),
                         bottom: (SizeConfig.width8(context) * 2)),
-                    child: RoundedButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () => _updateData(),
-                      title: 'Save',
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: RoundedButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () => _updateData(),
+                        title: 'Save',
+                      ),
                     ),
                   ),
           ],
@@ -164,24 +155,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() {
       _btnSpinner = true;
     });
+    FirestoreController firestoreController = FirestoreController();
     try {
       if (_formKey.currentState!.validate()) {
         FocusManager.instance.primaryFocus?.unfocus();
-        // String? profilePicture =
-        //     await MediaService.uploadFile(_profilePlatformFile);
+        String? profilePicture =
+            await MediaService.uploadFile(_profilePlatformFile);
+        firestoreController.updateUserDats(
+          UserModel(
+            email: _emailController.text,
+            businessName: _businessNameController.text,
+            uid: widget.userData.uid,
+            profileImage: profilePicture,
+          ),
+        );
         Fluttertoast.showToast(msg: "Data have been updated in database");
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const BottomAppBarScreen(
-              screenIndex: 3,
+              screenIndex: 2,
             ),
           ),
           (route) => false,
         );
       }
-    } catch (e) {
-      log(e.toString());
-      log("something went wrong while updating driver data");
+    } on UnknownException catch (e) {
+      Fluttertoast.showToast(msg: e.message);
+      log("Data updating failed");
+      Fluttertoast.showToast(msg: 'Data updating failed');
     }
     setState(() {
       _btnSpinner = false;
@@ -189,6 +190,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void setDataInFields() {
+    _businessNameController.text = widget.userData.businessName;
+    _emailController.text = widget.userData.email;
+    _imageLink = widget.userData.profileImage;
     setState(() {});
   }
 }

@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
+import 'package:shoe_shop/controllers/firestore_controller.dart';
 
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/utils/assets.dart';
@@ -24,7 +25,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  var userData;
+  var _userData;
   UserModel? _userModel;
   String? imageLink;
   String name = "";
@@ -50,9 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        actions: [
-          _EditProfileButton(userData: userData),
-        ],
+        actions: [_EditProfileButton(userData: _userData)],
       ),
       body: Column(
         children: [
@@ -61,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               top: SizeConfig.height12(context),
             ),
             child: Center(
-              child: userData == null
+              child: _userModel == null
                   ? const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: CircularProgressIndicator(),
@@ -72,18 +71,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       imageLink: imageLink,
                     ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: const Placeholder(),
-              ),
-              SizedBox(
-                width: SizeConfig.width8(context) * 2,
-              ),
-            ],
           ),
           SizedBox(
             height: SizeConfig.height8(context) * 2,
@@ -108,6 +95,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _getData() async {
     try {
+      FirestoreController firestoreController = FirestoreController();
+      _userModel = await firestoreController.getUserData();
+      if (_userModel != null) {
+        imageLink = _userModel!.profileImage;
+        name = _userModel!.businessName;
+        email = _userModel!.email;
+        _userData = _userModel;
+        setState(() {});
+        return;
+      }
       // if (value == null) {
       //   userData = UserData<UserModel>;
       //   userData = _userModel;
@@ -161,6 +158,7 @@ class _EditProfileButton extends StatelessWidget {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
+          color: whiteColor,
         ),
       ),
     );

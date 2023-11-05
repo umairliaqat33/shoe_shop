@@ -110,4 +110,29 @@ class FirestoreRepository {
     User? user = CollectionsNames.firebaseAuth.currentUser;
     return user;
   }
+
+  void updateUserData(UserModel userModel) {
+    try {
+      CollectionsNames.firestoreCollection
+          .collection(CollectionsNames.usersCollection)
+          .doc(_user!.uid)
+          .update(
+            userModel.toJson(),
+          );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
+  }
+
+  void deleteUserData() {
+    CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .delete();
+  }
 }
