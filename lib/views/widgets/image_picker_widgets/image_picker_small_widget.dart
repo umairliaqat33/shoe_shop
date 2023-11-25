@@ -16,12 +16,12 @@ class ImagePickerSmallWidget extends StatelessWidget {
   final PlatformFile? platformFile;
 
   const ImagePickerSmallWidget({
-    Key? key,
+    super.key,
     required this.sideText,
     required this.imgUrl,
     required this.platformFile,
     required this.selectImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -15,13 +15,13 @@ class ImagePickerBigWidget extends StatelessWidget {
   final String? imgUrl;
 
   const ImagePickerBigWidget({
-    Key? key,
+    super.key,
     required this.heading,
     required this.description,
     required this.onPressed,
     required this.platformFile,
     required this.imgUrl,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

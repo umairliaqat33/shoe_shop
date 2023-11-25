@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
@@ -6,7 +5,6 @@ import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
 import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';
-import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
 import 'package:shoe_shop/views/screens/data_adding_screen.dart/data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_card_widget.dart';
 
@@ -23,23 +21,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("Noor Kids"),
-          actions: [
-            IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
-                  (route) => false,
-                );
-              },
-              icon: const Icon(
-                Icons.power_settings_new,
-              ),
-            ),
-          ],
+          title: const Text("Home"),
         ),
         body: SafeArea(
           child: Padding(

@@ -10,13 +10,13 @@ class TileWidget extends StatelessWidget {
   final Color titleTextColor;
 
   const TileWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.trailingImg,
     required this.leadingImg,
     required this.onTap,
     this.titleTextColor = appTextColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
