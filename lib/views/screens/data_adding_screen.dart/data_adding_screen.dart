@@ -7,7 +7,7 @@ import 'package:shoe_shop/models/article_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen/size_data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_card.dart';
 import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
@@ -43,7 +43,11 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
     ArticleSizeModel(
       title: "title",
       colorAndQuantityList: [
-        ArticleSizeColorModel(color: 4278222848, quantity: 10)
+        ArticleSizeColorModel(
+          color: 4278222848,
+          quantity: 10,
+          colorName: 'yellow',
+        )
       ],
       salePrice: 1000,
       purchasePrice: 800,
@@ -149,7 +153,7 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                                             width:
                                                 SizeConfig.width20(context) * 5,
                                             child: RoundedButton(
-                                              color: lightGrey,
+                                              buttonColor: lightGrey,
                                               title: 'Cancel',
                                               onPressed: () {
                                                 Navigator.of(context).pop();
@@ -160,7 +164,7 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                                             width:
                                                 SizeConfig.width20(context) * 5,
                                             child: RoundedButton(
-                                              color: lightBlueColor,
+                                              buttonColor: lightBlueColor,
                                               title: 'DONE',
                                               onPressed: () {
                                                 Navigator.of(context).pop();

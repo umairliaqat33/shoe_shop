@@ -6,9 +6,11 @@ part 'article_size_color_model.g.dart';
 class ArticleSizeColorModel {
   final int color;
   final int quantity;
+  final String colorName;
   ArticleSizeColorModel({
     required this.color,
     required this.quantity,
+    required this.colorName,
   });
 
   factory ArticleSizeColorModel.fromJson(Map<String, dynamic> json) =>

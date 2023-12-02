@@ -123,7 +123,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       child: RoundedButton(
-                        color: Theme.of(context).primaryColor,
+                        buttonColor: Theme.of(context).primaryColor,
                         onPressed: () => _updateData(),
                         title: 'Save',
                       ),

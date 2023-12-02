@@ -92,7 +92,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       : SizedBox(
                           width: double.infinity,
                           child: RoundedButton(
-                            color: Theme.of(context).primaryColor,
+                            buttonColor: Theme.of(context).primaryColor,
                             onPressed: () => signup(),
                             title: 'Signup',
                           ),

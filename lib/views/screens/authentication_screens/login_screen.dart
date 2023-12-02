@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       : SizedBox(
                           width: double.infinity,
                           child: RoundedButton(
-                            color: Theme.of(context).primaryColor,
+                            buttonColor: Theme.of(context).primaryColor,
                             onPressed: () => signin(),
                             title: 'Signin',
                           ),

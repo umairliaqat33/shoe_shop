@@ -26,12 +26,14 @@ class TextFormFieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 3,
-          ),
-          child: Text(lable),
-        ),
+        lable.isEmpty
+            ? const SizedBox()
+            : Padding(
+                padding: const EdgeInsets.only(
+                  left: 3,
+                ),
+                child: Text(lable),
+              ),
         SizedBox(
           height: SizeConfig.height8(context),
         ),

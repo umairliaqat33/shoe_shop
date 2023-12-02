@@ -36,4 +36,12 @@ class Utils {
       return null;
     }
   }
+
+  static String? quantityValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Please set a quantity";
+    } else {
+      return null;
+    }
+  }
 }

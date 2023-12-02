@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
     super.key,
-    required this.color,
+    required this.buttonColor,
     required this.title,
     required this.onPressed,
   });
-  final Color color;
+  final Color buttonColor;
   final String title;
   final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: color,
+      color: buttonColor,
       borderRadius: BorderRadius.circular(10.0),
       elevation: 5.0,
       child: MaterialButton(

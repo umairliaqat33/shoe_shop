@@ -74,7 +74,7 @@ deleteAccountAlert({
           SizedBox(
             width: SizeConfig.width20(context) * 4.7,
             child: RoundedButton(
-              color: Theme.of(context).primaryColor,
+              buttonColor: Theme.of(context).primaryColor,
               onPressed: () => onDeleteTap(),
               title: 'DELETE',
             ),
@@ -82,7 +82,7 @@ deleteAccountAlert({
           SizedBox(
             width: SizeConfig.width20(context) * 4.7,
             child: RoundedButton(
-              color: Theme.of(context).primaryColor,
+              buttonColor: Theme.of(context).primaryColor,
               onPressed: () => onCancelTap(),
               title: 'CANCEL',
             ),

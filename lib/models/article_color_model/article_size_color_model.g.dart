@@ -11,6 +11,7 @@ ArticleSizeColorModel _$ArticleSizeColorModelFromJson(
     ArticleSizeColorModel(
       color: json['color'] as int,
       quantity: json['quantity'] as int,
+      colorName: json['colorName'] as String,
     );
 
 Map<String, dynamic> _$ArticleSizeColorModelToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ArticleSizeColorModelToJson(
     <String, dynamic>{
       'color': instance.color,
       'quantity': instance.quantity,
+      'colorName': instance.colorName,
     };
