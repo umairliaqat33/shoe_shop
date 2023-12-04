@@ -56,10 +56,10 @@ class _ArticleSizeColorQuantityWidgetState
               child: TextFormFieldWidget(
                 controller: widget.quantityController,
                 validator: (value) => Utils.quantityValidator(value),
-                lable: "",
+                label: "",
                 inputAction: TextInputAction.done,
                 inputType: TextInputType.number,
-                hintText: "1",
+                hintText: "0",
               ),
             ),
             Expanded(

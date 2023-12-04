@@ -7,9 +7,9 @@ import 'package:shoe_shop/models/article_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen/size_data_adding_screen.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/custom_article_size_widget.dart';
+import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen/article_size_data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_card.dart';
-import 'package:shoe_shop/views/widgets/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
 class DataAddingScreen extends StatefulWidget {
@@ -89,7 +89,7 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                   TextFormFieldWidget(
                     controller: _articleController,
                     validator: (value) => Utils.simpleValidator(value),
-                    lable: 'Article Name',
+                    label: 'Article Name',
                     hintText: "Enter your article name",
                     inputType: TextInputType.text,
                     inputAction: TextInputAction.next,
@@ -112,7 +112,7 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                       if (selectedItem != 'Custom Size') {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => SizeDataAddingScreen(
+                            builder: (context) => ArticleSizeDataAddingScreen(
                               sizeName: selectedItem,
                               articleSizeModelList: sizeArticleModelList,
                             ),
@@ -122,73 +122,9 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return Column(
-                              children: [
-                                AlertDialog(
-                                  title: const Text(
-                                    "Add Custom Size",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  content: Column(
-                                    children: [
-                                      TextFormFieldWidget(
-                                        controller: _customSizeController,
-                                        validator: (value) =>
-                                            Utils.simpleValidator(value),
-                                        lable: "Add a custom size",
-                                        hintText: "Enter size name",
-                                        inputType: TextInputType.text,
-                                        inputAction: TextInputAction.done,
-                                      ),
-                                      SizedBox(
-                                        height: SizeConfig.height8(context) * 2,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            width:
-                                                SizeConfig.width20(context) * 5,
-                                            child: RoundedButton(
-                                              buttonColor: lightGrey,
-                                              title: 'Cancel',
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width:
-                                                SizeConfig.width20(context) * 5,
-                                            child: RoundedButton(
-                                              buttonColor: lightBlueColor,
-                                              title: 'DONE',
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SizeDataAddingScreen(
-                                                      sizeName:
-                                                          _customSizeController
-                                                              .text,
-                                                      articleSizeModelList:
-                                                          sizeArticleModelList,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                            return CustomArticleSizeWidget(
+                              customSizeController: _customSizeController,
+                              sizeArticleModelList: sizeArticleModelList,
                             );
                           },
                         );
@@ -203,7 +139,7 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                   ),
                   sizeArticleModelList.isEmpty
                       ? Text(
-                          "No sizes selected yet",
+                          "No sizes added yet",
                           style: TextStyle(
                             fontSize: SizeConfig.font18(context),
                           ),

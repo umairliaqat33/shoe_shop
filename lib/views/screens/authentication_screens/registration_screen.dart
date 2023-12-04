@@ -56,7 +56,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: SizeConfig.height18(context) * 3,
                   ),
                   TextFormFieldWidget(
-                    lable: 'Business Name',
+                    label: 'Business Name',
                     controller: _businessNameController,
                     validator: (value) => Utils.businessNameValidator(value),
                     hintText: "John Doe",
@@ -67,7 +67,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: SizeConfig.height8(context),
                   ),
                   TextFormFieldWidget(
-                    lable: 'Email',
+                    label: 'Email',
                     controller: _emailController,
                     validator: (value) => Utils.emailValidator(value),
                     hintText: "Johndoe@gmail.com",

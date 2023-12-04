@@ -84,14 +84,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           }
                           return null;
                         },
-                        lable: 'Business Name',
+                        label: 'Business Name',
                       ),
                       SizedBox(
                         height: SizeConfig.height12(context),
                       ),
                       TextFormFieldWidget(
                         fieldEnabled: false,
-                        lable: "Email",
+                        label: "Email",
                         hintText: "Email",
                         controller: _emailController,
                         validator: (value) {

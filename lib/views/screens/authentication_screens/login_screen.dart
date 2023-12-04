@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: SizeConfig.height18(context) * 3,
                   ),
                   TextFormFieldWidget(
-                    lable: 'Email',
+                    label: 'Email',
                     controller: emailController,
                     validator: (value) => Utils.emailValidator(value),
                     hintText: "Johndoe@gmail.com",

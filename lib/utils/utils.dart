@@ -40,6 +40,28 @@ class Utils {
   static String? quantityValidator(String? value) {
     if (value!.isEmpty) {
       return "Please set a quantity";
+    } else if (int.parse(value) <= 0) {
+      return "Quantity must be more then 0";
+    } else {
+      return null;
+    }
+  }
+
+  static String? salePriceValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Please add sale price";
+    } else if (int.parse(value.toString()) <= 0) {
+      return "Sale price must be more then 0";
+    } else {
+      return null;
+    }
+  }
+
+  static String? purchasePriceValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Please add purchase price";
+    } else if (int.parse(value.toString()) <= 0) {
+      return "Purchase price must be more then 0";
     } else {
       return null;
     }

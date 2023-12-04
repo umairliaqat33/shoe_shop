@@ -6,7 +6,7 @@ class TextFormFieldWidget extends StatelessWidget {
     super.key,
     required this.controller,
     required this.validator,
-    required this.lable,
+    required this.label,
     this.hintText = "Enter a value",
     this.inputType = TextInputType.text,
     this.inputAction = TextInputAction.next,
@@ -15,7 +15,7 @@ class TextFormFieldWidget extends StatelessWidget {
   });
   final TextEditingController controller;
   final String hintText;
-  final String lable;
+  final String label;
   final TextInputType inputType;
   final TextInputAction inputAction;
   final FormFieldValidator validator;
@@ -26,13 +26,13 @@ class TextFormFieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        lable.isEmpty
+        label.isEmpty
             ? const SizedBox()
             : Padding(
                 padding: const EdgeInsets.only(
                   left: 3,
                 ),
-                child: Text(lable),
+                child: Text(label),
               ),
         SizedBox(
           height: SizeConfig.height8(context),
