@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
+import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/utils/collection_names.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
@@ -28,7 +28,7 @@ class FirestoreRepository {
   }
 
   void uploadArticle(
-    ShoeArticleModel shoeArticleModel,
+    ArticleModel shoeArticleModel,
   ) async {
     try {
       CollectionsNames.firestoreCollection
@@ -49,7 +49,7 @@ class FirestoreRepository {
     }
   }
 
-  Stream<List<ShoeArticleModel?>> getArticleStreamList() {
+  Stream<List<ArticleModel?>> getArticleStreamList() {
     return CollectionsNames.firestoreCollection
         .collection(CollectionsNames.usersCollection)
         .doc(_user!.uid)
@@ -59,7 +59,7 @@ class FirestoreRepository {
         .map(
           (snapshot) => snapshot.docs
               .map(
-                (doc) => ShoeArticleModel.fromJson(
+                (doc) => ArticleModel.fromJson(
                   doc.data(),
                 ),
               )
@@ -86,7 +86,7 @@ class FirestoreRepository {
         );
   }
 
-  void updateArticleData(ShoeArticleModel shoeArticleModel, String docId) {
+  void updateArticleData(ArticleModel shoeArticleModel, String docId) {
     try {
       CollectionsNames.firestoreCollection
           .collection(CollectionsNames.usersCollection)

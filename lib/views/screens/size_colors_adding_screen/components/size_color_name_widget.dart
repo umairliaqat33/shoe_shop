@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
-import 'package:shoe_shop/views/screens/home_screen/components/card_color_lower_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
 
-class ArticleSizeColorNameWidget extends StatelessWidget {
-  const ArticleSizeColorNameWidget({
+class SizeColorNameWidget extends StatelessWidget {
+  const SizeColorNameWidget({
     super.key,
     required this.articleSizeColorModel,
   });

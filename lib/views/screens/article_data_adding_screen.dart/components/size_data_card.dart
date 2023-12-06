@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
-import 'package:shoe_shop/models/article_model/article_size_model.dart';
+import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
-import 'package:shoe_shop/views/screens/home_screen/components/card_color_lower_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
 
 class SizeDataCard extends StatelessWidget {
   const SizeDataCard({

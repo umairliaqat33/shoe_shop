@@ -13,7 +13,7 @@ import 'package:shoe_shop/services/media_service.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shoe_shop/views/widgets/image_picker_widgets/image_picker_big_widget.dart';
-import 'package:shoe_shop/views/widgets/round_button.dart';
+import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
 class EditProfileScreen extends StatefulWidget {

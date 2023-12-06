@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
+import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/repositories/firestore_repository.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
@@ -24,7 +24,7 @@ class FirestoreController {
   }
 
   void uploadShoeArticle(
-    ShoeArticleModel shoeArticleModel,
+    ArticleModel shoeArticleModel,
   ) async {
     try {
       _firestoreRepository.uploadArticle(
@@ -40,7 +40,7 @@ class FirestoreController {
     }
   }
 
-  Stream<List<ShoeArticleModel?>> getArticleStreamList() {
+  Stream<List<ArticleModel?>> getArticleStreamList() {
     return _firestoreRepository.getArticleStreamList();
   }
 
@@ -53,7 +53,7 @@ class FirestoreController {
   }
 
   void updateShoeArticle(
-    ShoeArticleModel shoeArticleModel,
+    ArticleModel shoeArticleModel,
     String docId,
   ) async {
     try {

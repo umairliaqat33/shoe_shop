@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
-import 'package:shoe_shop/models/shoe_article_model/shoe_article_model.dart';
-import 'package:shoe_shop/utils/assets.dart';
+import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
+import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
+import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
-import 'package:shoe_shop/views/screens/data_adding_screen.dart/data_adding_screen.dart';
+import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
+import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_card_widget.dart';
 
 // ignore: must_be_immutable
@@ -31,7 +33,7 @@ class HomeScreen extends StatelessWidget {
               top: SizeConfig.height8(context) * 2,
               bottom: SizeConfig.height20(context) * 2,
             ),
-            child: StreamBuilder<List<ShoeArticleModel?>>(
+            child: StreamBuilder<List<ArticleModel?>>(
                 stream: _firestoreController.getArticleStreamList(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -39,37 +41,37 @@ class HomeScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  if (snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "No Articles found",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
+                  // if (snapshot.data!.isEmpty) {
+                  //   return const Center(
+                  //     child: NoDataWidget(
+                  //       alertText: "No articles added yet!",
+                  //     ),
+                  //   );
+                  // }
+                  List<ArticleModel?>? articleModelList = [
+                    ArticleModel(
+                      articleNumber: "articleNumber",
+                      articleSizeModelList: [
+                        ArticleSizeModel(
+                          title: "Size title",
+                          colorAndQuantityList: [
+                            ArticleSizeColorModel(
+                              color: blueColor.value,
+                              quantity: 10,
+                              colorName: 'blue color',
                             ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.height8(context),
-                          ),
-                          Image.asset(
-                            Assets.emptyScreenImage,
-                            color: lightGrey,
-                            height: SizeConfig.height20(context) * 8,
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                  List<ShoeArticleModel?>? shoeArticleModelList = snapshot.data;
+                          ],
+                          salePrice: 1000,
+                          purchasePrice: 900,
+                        ),
+                      ],
+                    ),
+                  ];
                   return ListView.builder(
-                    itemCount: shoeArticleModelList!.length,
+                    itemCount: articleModelList.length,
                     itemBuilder: (
                       BuildContext context,
-                      int index,
+                      int articleIndex,
                     ) {
                       return Card(
                         elevation: 5,
@@ -77,20 +79,16 @@ class HomeScreen extends StatelessWidget {
                           padding: EdgeInsets.all(SizeConfig.height8(context)),
                           child: ArticleCardWidget(
                             articleName:
-                                shoeArticleModelList[index]!.articleNumber,
-                            articleRate: shoeArticleModelList[index]!.rate,
-                            articleQuantity:
-                                shoeArticleModelList[index]!.quantity,
-                            articleMade:
-                                shoeArticleModelList[index]!.manufactureType,
-                            sizeList: shoeArticleModelList[index]!.sizeList,
-                            colorList: shoeArticleModelList[index]!.colorList,
-                            deleteFunction: () => deleteArticle(
-                                shoeArticleModelList[index]!.articleNumber,
-                                shoeArticleModelList.length),
-                            editFunction: () => editArticle(
-                              context,
-                              shoeArticleModelList[index]!,
+                                articleModelList[articleIndex]!.articleNumber,
+                            deleteFunction: () => _deleteArticle,
+                            editFunction: () => _editArticle,
+                            totalColors: _calculateTotalColors(
+                              articleModelList[articleIndex]!
+                                  .articleSizeModelList,
+                            ),
+                            totalQuantity: _calculateTotalQuantity(
+                              articleModelList[articleIndex]!
+                                  .articleSizeModelList,
                             ),
                           ),
                         ),
@@ -104,16 +102,16 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void deleteArticle(String id, int length) {
+  void _deleteArticle(String id, int length) {
     _firestoreController.deleteArticle(id);
     if (length == length--) {
       Fluttertoast.showToast(msg: "Article Deleted");
     }
   }
 
-  void editArticle(
+  void _editArticle(
     BuildContext context,
-    ShoeArticleModel shoeArticleModel,
+    ArticleModel shoeArticleModel,
   ) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -122,5 +120,23 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int _calculateTotalQuantity(List<ArticleSizeModel> sizeModelList) {
+    int totalQuantity = 0;
+    for (var sizes in sizeModelList) {
+      for (var colors in sizes.colorAndQuantityList) {
+        totalQuantity = colors.quantity + totalQuantity;
+      }
+    }
+    return totalQuantity;
+  }
+
+  int _calculateTotalColors(List<ArticleSizeModel> sizeModelList) {
+    int totalColors = 0;
+    for (var sizes in sizeModelList) {
+      totalColors = sizes.colorAndQuantityList.length + totalColors;
+    }
+    return totalColors;
   }
 }

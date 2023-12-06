@@ -6,14 +6,12 @@ class ArcticleCardUpperWidget extends StatelessWidget {
   const ArcticleCardUpperWidget({
     super.key,
     required this.articleNumber,
-    required this.articleRate,
-    required this.articleQuantity,
-    required this.articleMade,
+    required this.totalColors,
+    required this.totalQuantity,
   });
   final String articleNumber;
-  final int articleRate;
-  final int articleQuantity;
-  final String articleMade;
+  final int totalColors;
+  final int totalQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -21,38 +19,32 @@ class ArcticleCardUpperWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          children: [
-            Text(
-              articleNumber,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const CardLabelWidget(
-              label: 'Rate:',
-            ),
-            CardUpperValueWidget(
-              rate: articleRate.toString(),
-            ),
-          ],
+        Text(
+          articleNumber,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CardLabelWidget(
-              label: 'Quantity:',
+              label: 'Colors Available',
             ),
             CardUpperValueWidget(
-              rate: articleQuantity.toString(),
+              rate: totalColors.toString(),
             ),
+          ],
+        ),
+        Column(
+          children: [
             const CardLabelWidget(
-              label: 'Manufacture type:',
+              label: 'Total Quantity',
             ),
             CardUpperValueWidget(
-              rate: articleMade,
+              rate: totalQuantity.toString(),
             ),
           ],
         )

@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
-import 'package:shoe_shop/models/article_model/article_size_model.dart';
+import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/utils.dart';
-import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen/components/article_size_color_name_widget.dart';
-import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen/components/article_size_color_quantity_widget.dart';
-import 'package:shoe_shop/views/screens/data_adding_screen.dart/components/size_data_adding_screen/components/no_color_widget.dart';
-import 'package:shoe_shop/views/widgets/round_button.dart';
+import 'package:shoe_shop/views/screens/size_colors_adding_screen/components/size_color_name_widget.dart';
+import 'package:shoe_shop/views/screens/size_colors_adding_screen/components/size_color_quantity_widget.dart';
+import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
+import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
-class ArticleSizeDataAddingScreen extends StatefulWidget {
-  const ArticleSizeDataAddingScreen({
+class SizeColorsAddingScreen extends StatefulWidget {
+  const SizeColorsAddingScreen({
     super.key,
     required this.sizeName,
     required this.articleSizeModelList,
@@ -23,12 +23,10 @@ class ArticleSizeDataAddingScreen extends StatefulWidget {
   final List<ArticleSizeModel> articleSizeModelList;
 
   @override
-  State<ArticleSizeDataAddingScreen> createState() =>
-      _ArticleSizeDataAddingScreenState();
+  State<SizeColorsAddingScreen> createState() => _SizeColorsAddingScreenState();
 }
 
-class _ArticleSizeDataAddingScreenState
-    extends State<ArticleSizeDataAddingScreen> {
+class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
   List<String> colorList = [
     'Select a Color',
     'Blue',
@@ -59,6 +57,14 @@ class _ArticleSizeDataAddingScreenState
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Add Size Data'),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop(widget.articleSizeModelList);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+          ),
         ),
         body: Padding(
             padding: EdgeInsets.only(
@@ -68,7 +74,8 @@ class _ArticleSizeDataAddingScreenState
             ),
             child: Form(
               key: _formKey,
-              child: ListView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Size Name",
@@ -152,10 +159,13 @@ class _ArticleSizeDataAddingScreenState
                   SizedBox(
                     height: SizeConfig.height8(context),
                   ),
-                  SizedBox(
-                    height: SizeConfig.height20(context) * 15,
+                  Expanded(
                     child: _articleSizeColorModelList.isEmpty
-                        ? const Center(child: NoColorWidget())
+                        ? const Center(
+                            child: NoDataWidget(
+                              alertText: "No colors selected yet!",
+                            ),
+                          )
                         : ListView.builder(
                             itemCount: _articleSizeColorModelList.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -170,11 +180,11 @@ class _ArticleSizeDataAddingScreenState
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ArticleSizeColorNameWidget(
+                                      SizeColorNameWidget(
                                         articleSizeColorModel:
                                             _articleSizeColorModelList[index],
                                       ),
-                                      ArticleSizeColorQuantityWidget(
+                                      SizeColorQuantityWidget(
                                           quantityController:
                                               _quantityControllerList[index]),
                                       IconButton(

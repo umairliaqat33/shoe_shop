@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/utils/assets.dart';
 
-class NoColorWidget extends StatelessWidget {
-  const NoColorWidget({
+class NoDataWidget extends StatelessWidget {
+  const NoDataWidget({
     super.key,
+    required this.alertText,
   });
-
+  final String alertText;
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "No Colors selected yet!",
+          alertText,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(

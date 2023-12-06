@@ -17,6 +17,7 @@ class CardLabelWidget extends StatelessWidget {
       style: TextStyle(
         fontWeight: fontWeight,
         fontSize: fontSize,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

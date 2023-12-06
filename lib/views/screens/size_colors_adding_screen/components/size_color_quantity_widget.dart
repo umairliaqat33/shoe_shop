@@ -5,20 +5,19 @@ import 'package:shoe_shop/utils/constants.dart';
 import 'package:shoe_shop/utils/utils.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
-class ArticleSizeColorQuantityWidget extends StatefulWidget {
-  const ArticleSizeColorQuantityWidget({
+class SizeColorQuantityWidget extends StatefulWidget {
+  const SizeColorQuantityWidget({
     super.key,
     required this.quantityController,
   });
   final TextEditingController quantityController;
 
   @override
-  State<ArticleSizeColorQuantityWidget> createState() =>
-      _ArticleSizeColorQuantityWidgetState();
+  State<SizeColorQuantityWidget> createState() =>
+      _SizeColorQuantityWidgetState();
 }
 
-class _ArticleSizeColorQuantityWidgetState
-    extends State<ArticleSizeColorQuantityWidget> {
+class _SizeColorQuantityWidgetState extends State<SizeColorQuantityWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
