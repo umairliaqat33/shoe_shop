@@ -1,32 +1,36 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/utils.dart';
 import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/components/custom_article_size_widget.dart';
-import 'package:shoe_shop/views/screens/size_colors_adding_screen/size_colors_adding_screen.dart';
-import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/components/size_data_card.dart';
+import 'package:shoe_shop/views/screens/size_colors_adding_screen/size_colors_adding_screen.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
+import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
-class DataAddingScreen extends StatefulWidget {
-  const DataAddingScreen({
+class ArticleDataAddingScreen extends StatefulWidget {
+  const ArticleDataAddingScreen({
     super.key,
     this.shoeArticleModel,
+    this.list,
   });
   final ArticleModel? shoeArticleModel;
+  final List<ArticleSizeModel>? list;
 
   @override
-  State<DataAddingScreen> createState() => _DataAddingScreenState();
+  State<ArticleDataAddingScreen> createState() =>
+      _ArticleDataAddingScreenState();
 }
 
-class _DataAddingScreenState extends State<DataAddingScreen> {
+class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
   final TextEditingController _articleController = TextEditingController();
   final TextEditingController _customSizeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -42,7 +46,6 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
     'Custom Size',
   ];
   String selectedItem = '';
-  var result;
   List<ArticleSizeModel> _sizeArticleModelList = [];
 
   @override
@@ -51,6 +54,9 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
     // if (widget.shoeArticleModel != null) {
     //   _setValuesFromModel(widget.shoeArticleModel);
     // }
+    if (widget.list != null) {
+      _setListValues();
+    }
   }
 
   @override
@@ -96,11 +102,12 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
                 DropdownMenu<String>(
                   initialSelection: sizeList.first,
                   onSelected: (String? value) => dropDownMenuOnChanged(value),
-                  dropdownMenuEntries:
-                      sizeList.map<DropdownMenuEntry<String>>((String value) {
-                    return DropdownMenuEntry<String>(
-                        value: value, label: value);
-                  }).toList(),
+                  dropdownMenuEntries: sizeList.map<DropdownMenuEntry<String>>(
+                    (String value) {
+                      return DropdownMenuEntry<String>(
+                          value: value, label: value);
+                    },
+                  ).toList(),
                 ),
                 Expanded(
                   child: _sizeArticleModelList.isEmpty
@@ -140,8 +147,11 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
     setState(() {
       selectedItem = value!;
     });
+    FocusScope.of(context).unfocus();
+
+    var result;
     if (selectedItem != 'Custom Size') {
-      result = Navigator.of(context).push(
+      result = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => SizeColorsAddingScreen(
             sizeName: selectedItem,
@@ -149,27 +159,37 @@ class _DataAddingScreenState extends State<DataAddingScreen> {
           ),
         ),
       );
-      if (result.toString().isNotEmpty) {
-        _sizeArticleModelList = await result;
-        setState(() {});
-      }
     } else {
-      result = await showDialog<List<ArticleSizeModel>>(
+      var str = await showDialog<String>(
         context: context,
         builder: (BuildContext context) {
           return CustomArticleSizeWidget(
             customSizeController: _customSizeController,
-            sizeArticleModelList: _sizeArticleModelList,
           );
         },
       );
-      if (result.toString().isNotEmpty) {
-        _sizeArticleModelList = await result;
-        setState(() {});
+      if (str!.isNotEmpty) {
+        result = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SizeColorsAddingScreen(
+              sizeName: str,
+              articleSizeModelList: _sizeArticleModelList,
+            ),
+          ),
+        );
       }
+    }
+    if (result != null) {
+      _sizeArticleModelList = result;
+      setState(() {});
     }
     log(selectedItem);
   }
 
   void _uploadArticleData() {}
+  void _setListValues() {
+    setState(() {
+      _sizeArticleModelList = widget.list!;
+    });
+  }
 }

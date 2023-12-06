@@ -7,7 +7,7 @@ import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
-import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/data_adding_screen.dart';
+import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/article_data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_card_widget.dart';
 
 // ignore: must_be_immutable
@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
   ) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => DataAddingScreen(
+        builder: (context) => ArticleDataAddingScreen(
           shoeArticleModel: shoeArticleModel,
         ),
       ),
