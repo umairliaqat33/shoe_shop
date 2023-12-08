@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
@@ -150,7 +151,10 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     FocusScope.of(context).unfocus();
 
     var result;
-    if (selectedItem != 'Custom Size') {
+    if (selectedItem == 'Select a Size') {
+      Fluttertoast.showToast(msg: "Please select a valid size");
+      return;
+    } else if (selectedItem != 'Custom Size') {
       result = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => SizeColorsAddingScreen(

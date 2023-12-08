@@ -1,57 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:shoe_shop/utils/colors.dart';
-import 'package:shoe_shop/views/screens/home_screen/components/article_card_upper_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/card_label_widget.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/card_rate_widget.dart';
 
 class ArticleCardWidget extends StatelessWidget {
   const ArticleCardWidget({
     super.key,
-    required this.articleName,
-    required this.deleteFunction,
-    required this.editFunction,
+    required this.articleNumber,
     required this.totalColors,
     required this.totalQuantity,
   });
-  final String articleName;
-  final int totalQuantity;
+  final String articleNumber;
   final int totalColors;
-  final VoidCallback deleteFunction;
-  final VoidCallback editFunction;
+  final int totalQuantity;
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ArcticleCardUpperWidget(
-          articleNumber: articleName,
-          totalColors: totalColors,
-          totalQuantity: totalQuantity,
+        Text(
+          articleNumber,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        const Divider(
-          color: lightGrey,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CardLabelWidget(
+              label: 'Colors Available',
+            ),
+            CardUpperValueWidget(
+              rate: totalColors.toString(),
+            ),
+          ],
         ),
+        Column(
+          children: [
+            const CardLabelWidget(
+              label: 'Total Quantity',
+            ),
+            CardUpperValueWidget(
+              rate: totalQuantity.toString(),
+            ),
+          ],
+        )
       ],
     );
   }
-
-// SizedBox(
-//                   width: 50,
-//                   child: Column(
-//                     children: [
-//                       IconButton(
-//                         onPressed: () => deleteFunction(),
-//                         icon: const Icon(
-//                           Icons.delete_rounded,
-//                           color: lightGrey,
-//                         ),
-//                       ),
-//                       IconButton(
-//                         onPressed: () => editFunction(),
-//                         icon: const Icon(
-//                           Icons.edit,
-//                           color: lightGrey,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
 }

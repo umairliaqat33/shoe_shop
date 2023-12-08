@@ -136,7 +136,11 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                       setState(() {
                         _selectedItem = value!;
                       });
-                      if (!_checkIfColorExist(_selectedItem)) {
+                      if (_selectedItem == 'Select a Color') {
+                        Fluttertoast.showToast(
+                            msg: "Please select a valid color");
+                        return;
+                      } else if (!_checkIfColorExist(_selectedItem)) {
                         _articleSizeColorModelList.add(
                           ArticleSizeColorModel(
                             color: _checkColor(_selectedItem),
