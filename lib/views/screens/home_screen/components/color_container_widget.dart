@@ -22,6 +22,7 @@ class CardColorLowerWidget extends StatelessWidget {
         border: Border.all(
           color: blackColor,
         ),
+        shape: BoxShape.circle,
       ),
     );
   }

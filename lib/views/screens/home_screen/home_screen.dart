@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
@@ -7,8 +6,7 @@ import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_card_widget.dart';
-import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
-import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/article_data_adding_screen.dart';
+import 'package:shoe_shop/views/screens/home_screen/components/article_dialog_widget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -116,67 +114,11 @@ class HomeScreen extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              articleName,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text("Edit"),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text("Delete"),
-                      ),
-                    ],
-                  ),
-                  ListView.builder(
-                    itemCount: articleSizeModelList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (articleSizeModelList.isEmpty) {
-                        return const Center(
-                          child: NoDataWidget(
-                            alertText: "No articles added yet!",
-                          ),
-                        );
-                      }
-                      return Placeholder();
-                    },
-                  )
-                ],
-              ),
-            ),
+          return ArticleDialogWidget(
+            articleSizeModelList: articleSizeModelList,
+            articleName: articleName,
           );
         });
-  }
-
-  void _deleteArticle(String id, int length) {
-    _firestoreController.deleteArticle(id);
-    if (length == length--) {
-      Fluttertoast.showToast(msg: "Article Deleted");
-    }
-  }
-
-  void _editArticle(
-    BuildContext context,
-    ArticleModel shoeArticleModel,
-  ) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ArticleDataAddingScreen(
-          shoeArticleModel: shoeArticleModel,
-        ),
-      ),
-    );
   }
 
   int _calculateTotalQuantity(List<ArticleSizeModel> sizeModelList) {

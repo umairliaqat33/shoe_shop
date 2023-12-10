@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoe_shop/views/screens/home_screen/components/card_label_widget.dart';
-import 'package:shoe_shop/views/screens/home_screen/components/card_rate_widget.dart';
+import 'package:shoe_shop/views/widgets/general_widgets/card_lable_and_data_widget.dart';
 
 class ArticleCardWidget extends StatelessWidget {
   const ArticleCardWidget({
@@ -27,27 +26,14 @@ class ArticleCardWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CardLabelWidget(
-              label: 'Colors Available',
-            ),
-            CardUpperValueWidget(
-              rate: totalColors.toString(),
-            ),
-          ],
+        CardLabelAndItemDataWidget(
+          titleValue: totalColors,
+          title: 'Colors Available',
         ),
-        Column(
-          children: [
-            const CardLabelWidget(
-              label: 'Total Quantity',
-            ),
-            CardUpperValueWidget(
-              rate: totalQuantity.toString(),
-            ),
-          ],
-        )
+        CardLabelAndItemDataWidget(
+          titleValue: totalQuantity,
+          title: 'Total Quantity',
+        ),
       ],
     );
   }
