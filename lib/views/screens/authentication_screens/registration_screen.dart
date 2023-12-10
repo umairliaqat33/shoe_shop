@@ -13,7 +13,7 @@ import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
 import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
-import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/password_text_field.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
@@ -154,7 +154,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         Fluttertoast.showToast(msg: 'Signup Successful');
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => const BottomAppBarScreen(),
+            builder: (context) => const BottomNavigationBarScreen(),
           ),
           (route) => false,
         );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
-import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
-import 'package:shoe_shop/utils/colors.dart';
+import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/article_data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_card_widget.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_dialog_widget.dart';
+import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          elevation: 10,
           centerTitle: true,
           title: const Text("Home"),
         ),
@@ -39,34 +40,16 @@ class HomeScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  // if (snapshot.data!.isEmpty) {
-                  //   return const Center(
-                  //     child: NoDataWidget(
-                  //       alertText: "No articles added yet!",
-                  //     ),
-                  //   );
-                  // }
-                  List<ArticleModel?>? articleModelList = [
-                    ArticleModel(
-                      articleNumber: "articleNumber",
-                      articleSizeModelList: [
-                        ArticleSizeModel(
-                          title: "Size title",
-                          colorAndQuantityList: [
-                            ArticleSizeColorModel(
-                              color: blueColor.value,
-                              quantity: 10,
-                              colorName: 'blue color',
-                            ),
-                          ],
-                          salePrice: 1000,
-                          purchasePrice: 900,
-                        ),
-                      ],
-                    ),
-                  ];
+                  if (snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: NoDataWidget(
+                        alertText: "No articles added yet!",
+                      ),
+                    );
+                  }
+                  List<ArticleModel?>? articleModelList = snapshot.data;
                   return ListView.builder(
-                    itemCount: articleModelList.length,
+                    itemCount: articleModelList!.length,
                     itemBuilder: (
                       BuildContext context,
                       int articleIndex,
@@ -75,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () => _onArticleClicked(
                           articleModelList[articleIndex]!.articleNumber,
                           articleModelList[articleIndex]!.articleSizeModelList,
+                          articleModelList[articleIndex]!,
                           context,
                         ),
                         child: Card(
@@ -109,6 +93,7 @@ class HomeScreen extends StatelessWidget {
   void _onArticleClicked(
     String articleName,
     List<ArticleSizeModel> articleSizeModelList,
+    ArticleModel articleModel,
     BuildContext context,
   ) {
     showDialog(
@@ -117,6 +102,10 @@ class HomeScreen extends StatelessWidget {
           return ArticleDialogWidget(
             articleSizeModelList: articleSizeModelList,
             articleName: articleName,
+            editFunction: () => editArticle(
+              context,
+              articleModel,
+            ),
           );
         });
   }
@@ -137,5 +126,19 @@ class HomeScreen extends StatelessWidget {
       totalColors = sizes.colorAndQuantityList.length + totalColors;
     }
     return totalColors;
+  }
+
+  void editArticle(
+    BuildContext context,
+    ArticleModel articleModel,
+  ) {
+    Navigator.of(context).pop();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ArticleDataAddingScreen(
+          articleModel: articleModel,
+        ),
+      ),
+    );
   }
 }

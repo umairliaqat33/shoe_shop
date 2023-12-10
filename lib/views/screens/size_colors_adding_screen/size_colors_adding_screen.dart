@@ -267,15 +267,19 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
 
   void _addArticleSize() {
     if (_formKey.currentState!.validate()) {
-      widget.articleSizeModelList.add(
-        ArticleSizeModel(
-          title: widget.sizeName,
-          colorAndQuantityList: _articleSizeColorModelList,
-          salePrice: int.parse(_salePriceController.text),
-          purchasePrice: int.parse(_purchasePriceController.text),
-        ),
-      );
-      Navigator.of(context).pop(widget.articleSizeModelList);
+      if (_articleSizeColorModelList.isNotEmpty) {
+        widget.articleSizeModelList.add(
+          ArticleSizeModel(
+            title: widget.sizeName,
+            colorAndQuantityList: _articleSizeColorModelList,
+            salePrice: int.parse(_salePriceController.text),
+            purchasePrice: int.parse(_purchasePriceController.text),
+          ),
+        );
+        Navigator.of(context).pop(widget.articleSizeModelList);
+      } else {
+        Fluttertoast.showToast(msg: "Please add some colors");
+      }
     }
   }
 }

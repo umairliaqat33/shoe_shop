@@ -11,10 +11,12 @@ class ArticleDialogWidget extends StatelessWidget {
     super.key,
     required this.articleSizeModelList,
     required this.articleName,
+    required this.editFunction,
   });
 
   final List<ArticleSizeModel> articleSizeModelList;
   final String articleName;
+  final Function editFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class ArticleDialogWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => editFunction(),
                   child: const Text("Edit"),
                 ),
                 TextButton(
@@ -55,6 +57,7 @@ class ArticleDialogWidget extends StatelessWidget {
                   }
                   return Container(
                     padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.only(top: 10),
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: const BorderRadius.all(

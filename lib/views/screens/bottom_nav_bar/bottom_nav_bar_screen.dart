@@ -4,17 +4,18 @@ import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/article_
 import 'package:shoe_shop/views/screens/home_screen/home_screen.dart';
 import 'package:shoe_shop/views/screens/profile_screen/profile_screen.dart';
 
-class BottomAppBarScreen extends StatefulWidget {
-  const BottomAppBarScreen({
+class BottomNavigationBarScreen extends StatefulWidget {
+  const BottomNavigationBarScreen({
     super.key,
     this.screenIndex = 0,
   });
   final int screenIndex;
   @override
-  State<BottomAppBarScreen> createState() => _BottomAppBarScreenState();
+  State<BottomNavigationBarScreen> createState() =>
+      _BottomNavigationBarScreenState();
 }
 
-class _BottomAppBarScreenState extends State<BottomAppBarScreen> {
+class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   final List<Widget> _widgetList = [
     HomeScreen(),
     const ArticleDataAddingScreen(),

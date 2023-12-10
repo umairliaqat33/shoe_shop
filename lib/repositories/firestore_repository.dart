@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,21 +29,23 @@ class FirestoreRepository {
   }
 
   void uploadArticle(
-    ArticleModel shoeArticleModel,
+    ArticleModel articleModel,
   ) async {
     try {
       CollectionsNames.firestoreCollection
           .collection(CollectionsNames.usersCollection)
           .doc(_user!.uid)
           .collection(CollectionsNames.articleCollection)
-          .doc(shoeArticleModel.articleNumber)
+          .doc(articleModel.articleNumber)
           .set(
-            shoeArticleModel.toJson(),
+            articleModel.toJson(),
           );
     } on FirebaseAuthException catch (e) {
       if (e.code == AppStrings.noInternet) {
+        log(e.toString());
         throw SocketException("${e.code}${e.message}");
       } else {
+        log(e.toString());
         throw UnknownException(
             "${AppStrings.wentWrong} ${e.code} ${e.message}");
       }
@@ -54,7 +57,6 @@ class FirestoreRepository {
         .collection(CollectionsNames.usersCollection)
         .doc(_user!.uid)
         .collection(CollectionsNames.articleCollection)
-        .orderBy('quantity')
         .snapshots()
         .map(
           (snapshot) => snapshot.docs

@@ -19,7 +19,8 @@ ArticleSizeModel _$ArticleSizeModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ArticleSizeModelToJson(ArticleSizeModel instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'colorAndQuantityList': instance.colorAndQuantityList,
+      'colorAndQuantityList':
+          instance.colorAndQuantityList.map((e) => e.toJson()).toList(),
       'salePrice': instance.salePrice,
       'purchasePrice': instance.purchasePrice,
     };

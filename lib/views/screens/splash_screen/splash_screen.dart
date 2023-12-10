@@ -7,7 +7,7 @@ import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/repositories/auth_repository.dart';
 import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
-import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -55,8 +55,9 @@ class _SplashScreenState extends State<SplashScreen> {
         }
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) =>
-                user == null ? const LoginScreen() : const BottomAppBarScreen(),
+            builder: (context) => user == null
+                ? const LoginScreen()
+                : const BottomNavigationBarScreen(),
           ),
           (route) => false,
         );

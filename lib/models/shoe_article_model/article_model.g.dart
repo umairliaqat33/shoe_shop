@@ -16,5 +16,6 @@ ArticleModel _$ArticleModelFromJson(Map<String, dynamic> json) => ArticleModel(
 Map<String, dynamic> _$ArticleModelToJson(ArticleModel instance) =>
     <String, dynamic>{
       'articleNumber': instance.articleNumber,
-      'articleSizeModelList': instance.articleSizeModelList,
+      'articleSizeModelList':
+          instance.articleSizeModelList.map((e) => e.toJson()).toList(),
     };

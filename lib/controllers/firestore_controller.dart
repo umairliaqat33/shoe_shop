@@ -23,12 +23,12 @@ class FirestoreController {
     }
   }
 
-  void uploadShoeArticle(
-    ArticleModel shoeArticleModel,
+  void uploadArticle(
+    ArticleModel articleModel,
   ) async {
     try {
       _firestoreRepository.uploadArticle(
-        shoeArticleModel,
+        articleModel,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == AppStrings.noInternet) {
