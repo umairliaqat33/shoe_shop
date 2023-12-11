@@ -53,7 +53,6 @@ class AuthRepository {
 
   void deleteUserAccount() {
     FirestoreRepository firestoreRepository = FirestoreRepository();
-    CollectionsNames.firebaseAuth.signOut();
     CollectionsNames.firebaseAuth.currentUser?.delete();
     firestoreRepository.deleteUserData();
   }
