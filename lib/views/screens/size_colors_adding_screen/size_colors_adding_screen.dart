@@ -103,7 +103,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                     validator: (value) => Utils.purchasePriceValidator(value),
                     label: "Purchase Price",
                     inputType: TextInputType.number,
-                    inputAction: TextInputAction.done,
+                    inputAction: TextInputAction.next,
                     hintText: "i.e. 801",
                   ),
                   SizedBox(
@@ -114,7 +114,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                     validator: (value) => Utils.salePriceValidator(value),
                     label: "Sale Price",
                     inputType: TextInputType.number,
-                    inputAction: TextInputAction.next,
+                    inputAction: TextInputAction.done,
                     hintText: "i.e. 901",
                   ),
                   SizedBox(
@@ -268,6 +268,10 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
   void _addArticleSize() {
     if (_formKey.currentState!.validate()) {
       if (_articleSizeColorModelList.isNotEmpty) {
+        for (int i = 0; i < _articleSizeColorModelList.length; i++) {
+          _articleSizeColorModelList[i].quantity =
+              int.parse(_quantityControllerList[i].text);
+        }
         widget.articleSizeModelList.add(
           ArticleSizeModel(
             title: widget.sizeName,

@@ -9,9 +9,11 @@ class SizeDataCard extends StatelessWidget {
   const SizeDataCard({
     super.key,
     required this.sizeModelList,
+    required this.deleteSize,
   });
 
   final ArticleSizeModel sizeModelList;
+  final Function deleteSize;
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +62,16 @@ class SizeDataCard extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () => deleteSize(),
                   icon: const Icon(
                     Icons.delete,
                   )),
               IconButton(
-                onPressed: () => _editSize(
-                  sizeName: '',
-                  context: context,
-                ),
+                onPressed: () {},
+                // _editSize(
+                //   sizeName: '',
+                //   context: context,
+                // ),
                 icon: const Icon(Icons.edit),
               ),
             ],
@@ -85,7 +88,7 @@ class SizeDataCard extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SizeColorsAddingScreen(
-            sizeName: sizeName, articleSizeModelList: []),
+            sizeName: sizeName, articleSizeModelList: const []),
       ),
     );
   }

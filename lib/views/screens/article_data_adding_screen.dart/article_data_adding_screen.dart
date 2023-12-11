@@ -89,7 +89,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                   label: 'Article Name',
                   hintText: "Enter your article name",
                   inputType: TextInputType.text,
-                  inputAction: TextInputAction.next,
+                  inputAction: TextInputAction.done,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -122,6 +122,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                           itemBuilder: (BuildContext context, int index) {
                             return SizeDataCard(
                               sizeModelList: _sizeArticleModelList[index],
+                              deleteSize: () => _deleteArticleSize(index),
                             );
                           },
                         ),
@@ -249,5 +250,11 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
       _articleController.text = widget.articleModel!.articleNumber;
       _sizeArticleModelList = widget.articleModel!.articleSizeModelList;
     });
+  }
+
+  void _deleteArticleSize(int index) {
+    _sizeArticleModelList.removeAt(index);
+    Fluttertoast.showToast(msg: "Size removed");
+    setState(() {});
   }
 }

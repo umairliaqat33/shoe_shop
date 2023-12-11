@@ -12,11 +12,13 @@ class ArticleDialogWidget extends StatelessWidget {
     required this.articleSizeModelList,
     required this.articleName,
     required this.editFunction,
+    required this.deleteFunction,
   });
 
   final List<ArticleSizeModel> articleSizeModelList;
   final String articleName;
   final Function editFunction;
+  final Function deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ArticleDialogWidget extends StatelessWidget {
                   child: const Text("Edit"),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => deleteFunction(),
                   child: const Text("Delete"),
                 ),
               ],
