@@ -65,6 +65,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          elevation: 1,
           centerTitle: true,
           title: const Text('Add Item Data'),
         ),
@@ -117,14 +118,10 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                             alertText: "No sizes selected yet!",
                           ),
                         )
-                      : ListView.builder(
-                          itemCount: _sizeArticleModelList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return SizeDataCard(
-                              sizeModelList: _sizeArticleModelList[index],
-                              deleteSize: () => _deleteArticleSize(index),
-                            );
-                          },
+                      : SizeDataCard(
+                          sizeModelList: _sizeArticleModelList,
+                          deleteSize: () => deleteArticleSetState(),
+                          // editSize: () => editArticleSetState(),
                         ),
                 ),
                 showLoader
@@ -252,9 +249,11 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     });
   }
 
-  void _deleteArticleSize(int index) {
-    _sizeArticleModelList.removeAt(index);
-    Fluttertoast.showToast(msg: "Size removed");
+  void deleteArticleSetState() {
     setState(() {});
   }
+
+  // void editArticleSetState() {
+  //   setState(() {});
+  // }
 }
