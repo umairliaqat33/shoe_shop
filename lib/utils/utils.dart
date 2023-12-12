@@ -66,4 +66,30 @@ class Utils {
       return null;
     }
   }
+
+  static String? subjectValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Subject is required";
+    } else {
+      return null;
+    }
+  }
+
+  static String? phoneNumberValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Phone number required";
+    }
+    if (!RegExp(phoneNumberPattern).hasMatch(value)) {
+      return "Enter a valid phone";
+    }
+    return null;
+  }
+
+  static String? messageValidator(String? value) {
+    if (value!.isEmpty) {
+      return "message is required";
+    } else {
+      return null;
+    }
+  }
 }

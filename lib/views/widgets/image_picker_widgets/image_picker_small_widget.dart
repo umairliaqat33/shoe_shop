@@ -3,8 +3,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:file_picker/file_picker.dart';
+
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';

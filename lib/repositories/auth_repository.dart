@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:shoe_shop/repositories/firestore_repository.dart';
 import 'package:shoe_shop/utils/collection_names.dart';
 import 'package:shoe_shop/utils/exceptions.dart';

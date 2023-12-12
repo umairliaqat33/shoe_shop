@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:shoe_shop/views/widgets/general_widgets/card_lable_and_data_widget.dart';
 
 class ArticleCardWidget extends StatelessWidget {
@@ -21,7 +22,7 @@ class ArticleCardWidget extends StatelessWidget {
         Text(
           articleNumber,
           style: const TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w400,
             fontSize: 20,
             overflow: TextOverflow.ellipsis,
           ),

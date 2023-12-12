@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/utils/colors.dart';
 
@@ -13,6 +14,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.inputAction = TextInputAction.next,
     this.textAlign = TextAlign.left,
     this.fieldEnabled = true,
+    this.maxlines = 1,
   });
   final TextEditingController controller;
   final String hintText;
@@ -22,6 +24,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final FormFieldValidator validator;
   final TextAlign textAlign;
   final bool fieldEnabled;
+  final int maxlines;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,6 +48,7 @@ class TextFormFieldWidget extends StatelessWidget {
           keyboardType: inputType,
           textAlign: textAlign,
           validator: validator,
+          maxLines: maxlines,
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: const EdgeInsets.all(

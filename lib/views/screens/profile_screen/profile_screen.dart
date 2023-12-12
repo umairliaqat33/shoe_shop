@@ -11,6 +11,7 @@ import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/edit_profiles/edit_profile_screen.dart';
+import 'package:shoe_shop/views/screens/help_screen/help_screen.dart';
 import 'package:shoe_shop/views/screens/profile_screen/components/info_card.dart';
 import 'package:shoe_shop/views/screens/profile_screen/components/tile_widget.dart';
 import 'package:shoe_shop/views/screens/settings_screen/settings_screen.dart';
@@ -85,10 +86,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () async => _settingsScreen(),
             leadingImg: Assets.settingsIcon,
           ),
-          const TileWidget(
+          TileWidget(
             text: "Help",
             trailingImg: Assets.arrowForwardHead,
-            onTap: null,
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => HelpScreen(
+                    email: _userModel!.email,
+                  ),
+                ),
+              );
+            },
             leadingImg: Assets.helpIcon,
             titleTextColor: appTextColor,
           ),

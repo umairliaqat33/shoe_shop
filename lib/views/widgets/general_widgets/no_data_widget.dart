@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:shoe_shop/utils/assets.dart';
 
 class NoDataWidget extends StatelessWidget {
