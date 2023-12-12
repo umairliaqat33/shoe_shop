@@ -41,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: appBarColor,
         elevation: 1,
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -48,7 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           "Profile",
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.bold,
+            color: whiteColor,
           ),
         ),
         actions: [_EditProfileButton(userData: _userData)],
@@ -63,7 +65,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: _userModel == null
                   ? const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: primaryColor,
+                      ),
                     )
                   : InfoCard(
                       name: name,

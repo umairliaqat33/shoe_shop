@@ -45,6 +45,7 @@ class ImagePickerSmallWidget extends StatelessWidget {
                           ? loadingProgress.cumulativeBytesLoaded /
                               loadingProgress.expectedTotalBytes!
                           : null,
+                      color: primaryColor,
                     ),
                   );
                 },

@@ -10,6 +10,7 @@ import 'package:shoe_shop/controllers/auth_controller.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/utils/assets.dart';
+import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
 import 'package:shoe_shop/views/screens/authentication_screens/login_screen.dart';
@@ -87,12 +88,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             left: SizeConfig.width12(context) * 10,
                             right: SizeConfig.width12(context) * 10,
                           ),
-                          child: const CircularProgressIndicator(),
+                          child: const CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
                         )
                       : SizedBox(
                           width: double.infinity,
                           child: RoundedButton(
-                            buttonColor: Theme.of(context).primaryColor,
+                            buttonColor: primaryColor,
                             onPressed: () => signup(),
                             title: 'Signup',
                           ),
@@ -114,7 +117,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           );
                         },
-                        child: const Text("Signin"),
+                        child: const Text(
+                          "Signin",
+                          style: TextStyle(
+                            color: primaryColor,
+                          ),
+                        ),
                       ),
                     ],
                   ),

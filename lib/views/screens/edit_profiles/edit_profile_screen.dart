@@ -10,6 +10,7 @@ import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/services/media_service.dart';
+import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:shoe_shop/views/widgets/image_picker_widgets/image_picker_big_widget.dart';
@@ -43,93 +44,107 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Edit Profile"),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(
-          top: SizeConfig.height12(context),
-          left: (SizeConfig.width8(context) * 2),
-          right: (SizeConfig.width8(context) * 2),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: appBarColor,
+          iconTheme: const IconThemeData(
+            color: whiteColor,
+          ),
+          title: const Text(
+            "Edit Profile",
+            style: TextStyle(
+              color: whiteColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ImagePickerBigWidget(
-                        heading: 'Profile Photo',
-                        description:
-                            'add a close-up image of yourself max size is 2 MB',
-                        onPressed: () async => _selectProfileImage(),
-                        platformFile: _profilePlatformFile,
-                        imgUrl: _imageLink,
-                      ),
-                      SizedBox(
-                        height: SizeConfig.height12(context),
-                      ),
-                      TextFormFieldWidget(
-                        hintText: "Business name",
-                        controller: _businessNameController,
-                        validator: (value) {
-                          if (_businessNameController.text.isEmpty) {
-                            return "Full name required";
-                          }
-                          return null;
-                        },
-                        label: 'Business Name',
-                      ),
-                      SizedBox(
-                        height: SizeConfig.height12(context),
-                      ),
-                      TextFormFieldWidget(
-                        fieldEnabled: false,
-                        label: "Email",
-                        hintText: "Email",
-                        controller: _emailController,
-                        validator: (value) {
-                          if (_businessNameController.text.isEmpty) {
-                            return "Email required";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: SizeConfig.height12(context),
-                      ),
-                    ],
+        body: Padding(
+          padding: EdgeInsets.only(
+            top: SizeConfig.height12(context),
+            left: (SizeConfig.width8(context) * 2),
+            right: (SizeConfig.width8(context) * 2),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ImagePickerBigWidget(
+                          heading: 'Profile Photo',
+                          description:
+                              'add a close-up image of yourself max size is 2 MB',
+                          onPressed: () async => _selectProfileImage(),
+                          platformFile: _profilePlatformFile,
+                          imgUrl: _imageLink,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.height12(context),
+                        ),
+                        TextFormFieldWidget(
+                          hintText: "Business name",
+                          controller: _businessNameController,
+                          validator: (value) {
+                            if (_businessNameController.text.isEmpty) {
+                              return "Full name required";
+                            }
+                            return null;
+                          },
+                          label: 'Business Name',
+                        ),
+                        SizedBox(
+                          height: SizeConfig.height12(context),
+                        ),
+                        TextFormFieldWidget(
+                          fieldEnabled: false,
+                          label: "Email",
+                          hintText: "Email",
+                          controller: _emailController,
+                          validator: (value) {
+                            if (_businessNameController.text.isEmpty) {
+                              return "Email required";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: SizeConfig.height12(context),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            _btnSpinner
-                ? const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: CircularProgressIndicator(),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(
-                        top: (SizeConfig.height20(context)),
-                        // left: (SizeConfig.width8(context) * 2),
-                        // right: (SizeConfig.width8(context) * 2),
-                        bottom: (SizeConfig.width8(context) * 2)),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: RoundedButton(
-                        buttonColor: Theme.of(context).primaryColor,
-                        onPressed: () => _updateData(),
-                        title: 'Save',
+              _btnSpinner
+                  ? const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: CircularProgressIndicator(
+                        color: primaryColor,
+                      ),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(
+                          top: (SizeConfig.height20(context)),
+                          // left: (SizeConfig.width8(context) * 2),
+                          // right: (SizeConfig.width8(context) * 2),
+                          bottom: (SizeConfig.width8(context) * 2)),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: RoundedButton(
+                          buttonColor: primaryColor,
+                          onPressed: () => _updateData(),
+                          title: 'Save',
+                        ),
                       ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -65,9 +65,16 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: appBarColor,
           elevation: 1,
           centerTitle: true,
-          title: const Text('Add Item Data'),
+          title: const Text(
+            'Add Item Data',
+            style: TextStyle(
+              color: whiteColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.only(
@@ -125,13 +132,16 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                         ),
                 ),
                 showLoader
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        color: primaryColor,
+                      ))
                     : Container(
                         padding: EdgeInsets.only(
                             bottom: SizeConfig.height15(context) + 1),
                         width: double.infinity,
                         child: RoundedButton(
-                          buttonColor: lightBlueColor,
+                          buttonColor: primaryColor,
                           title: "Done",
                           onPressed: () => _uploadArticleData(),
                         ),

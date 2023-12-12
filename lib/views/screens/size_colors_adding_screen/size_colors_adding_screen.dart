@@ -226,7 +226,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                         bottom: SizeConfig.height15(context) + 1),
                     width: double.infinity,
                     child: RoundedButton(
-                      buttonColor: lightBlueColor,
+                      buttonColor: primaryColor,
                       title: "Done",
                       onPressed: () => _addArticleSize(),
                     ),

@@ -3,13 +3,12 @@ import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 
-deleteAccountAlert({
-  required final Function onDeleteTap,
+logoutAlertDialogBox({
+  required final Function onLogoutTap,
   required final Function onCancelTap,
   bool dismissibleProperty = true,
   required BuildContext context,
   required String description,
-  required String image,
   required String heading,
 }) {
   return showDialog(
@@ -37,7 +36,18 @@ deleteAccountAlert({
                   top: (SizeConfig.height15(context) * 2) + 2,
                   bottom: (SizeConfig.height8(context) * 2),
                 ),
-                child: Image.asset(image),
+                child: Container(
+                  padding: EdgeInsets.all(SizeConfig.height10(context)),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: lightBlueColor.withOpacity(0.5),
+                  ),
+                  child: Icon(
+                    Icons.logout,
+                    size: SizeConfig.height20(context) * 3,
+                    color: lightBlueColor,
+                  ),
+                ),
               ),
               Text(
                 heading,
@@ -75,8 +85,8 @@ deleteAccountAlert({
             width: SizeConfig.width20(context) * 4.7,
             child: RoundedButton(
               buttonColor: primaryColor,
-              onPressed: () => onDeleteTap(),
-              title: 'DELETE',
+              onPressed: () => onLogoutTap(),
+              title: 'Logout',
             ),
           ),
           SizedBox(
@@ -84,7 +94,7 @@ deleteAccountAlert({
             child: RoundedButton(
               buttonColor: greyColor,
               onPressed: () => onCancelTap(),
-              title: 'CANCEL',
+              title: 'Cancel',
             ),
           ),
         ],

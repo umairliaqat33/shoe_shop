@@ -52,7 +52,7 @@ class CustomArticleSizeWidget extends StatelessWidget {
                 SizedBox(
                   width: SizeConfig.width20(context) * 5,
                   child: RoundedButton(
-                    buttonColor: lightBlueColor,
+                    buttonColor: primaryColor,
                     title: 'DONE',
                     onPressed: () {
                       Navigator.of(context).pop(_customSizeController.text);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoe_shop/utils/colors.dart';
 
 class TextFieldDecoration {
   static const kTextFieldDecoration = InputDecoration(
@@ -15,7 +16,7 @@ class TextFieldDecoration {
         ),
       ),
       borderSide: BorderSide(
-        color: Colors.lightBlue.withOpacity(0.3),
+        color: primaryColor.withOpacity(0.3),
       ),
     ),
     disabledBorder: const OutlineInputBorder(
@@ -35,7 +36,7 @@ class TextFieldDecoration {
         ),
       ),
       borderSide: BorderSide(
-        color: Colors.blue,
+        color: primaryColor,
       ),
     ),
     errorBorder: const OutlineInputBorder(

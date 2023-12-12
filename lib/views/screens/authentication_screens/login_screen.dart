@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/auth_controller.dart';
 import 'package:shoe_shop/utils/assets.dart';
+import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
 import 'package:shoe_shop/views/screens/authentication_screens/registration_screen.dart';
@@ -73,12 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             left: SizeConfig.width12(context) * 10,
                             right: SizeConfig.width12(context) * 10,
                           ),
-                          child: const CircularProgressIndicator(),
+                          child: const CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
                         )
                       : SizedBox(
                           width: double.infinity,
                           child: RoundedButton(
-                            buttonColor: Theme.of(context).primaryColor,
+                            buttonColor: primaryColor,
                             onPressed: () => signin(),
                             title: 'Signin',
                           ),
@@ -100,7 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         },
-                        child: const Text("SignUp"),
+                        child: const Text(
+                          "SignUp",
+                          style: TextStyle(
+                            color: primaryColor,
+                          ),
+                        ),
                       ),
                     ],
                   ),

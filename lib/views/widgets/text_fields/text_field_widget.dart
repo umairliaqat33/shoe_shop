@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
+import 'package:shoe_shop/utils/colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   const TextFormFieldWidget({
@@ -56,7 +57,7 @@ class TextFormFieldWidget extends StatelessWidget {
                 ),
               ),
               borderSide: BorderSide(
-                color: Colors.lightBlue.withOpacity(0.3),
+                color: primaryColor.withOpacity(0.3),
               ),
             ),
             disabledBorder: const OutlineInputBorder(
@@ -76,7 +77,7 @@ class TextFormFieldWidget extends StatelessWidget {
                 ),
               ),
               borderSide: BorderSide(
-                color: Colors.blue,
+                color: primaryColor,
               ),
             ),
             errorBorder: const OutlineInputBorder(

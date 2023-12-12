@@ -6,6 +6,7 @@ import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
+import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/article_data_adding_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_card_widget.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/article_dialog_widget.dart';
@@ -23,15 +24,20 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: appBarColor,
           elevation: 1,
           centerTitle: true,
-          title: const Text("Home"),
+          title: const Text(
+            "Home",
+            style: TextStyle(
+              color: whiteColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(
-              // left: SizeConfig.width8(context) * 2,
-              // right: SizeConfig.width8(context) * 2,
               top: SizeConfig.height8(context) * 2,
               bottom: SizeConfig.height20(context) * 2,
             ),
@@ -40,7 +46,9 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: primaryColor,
+                      ),
                     );
                   }
                   if (snapshot.data!.isEmpty) {
@@ -57,28 +65,33 @@ class HomeScreen extends StatelessWidget {
                       BuildContext context,
                       int articleIndex,
                     ) {
-                      return MaterialButton(
-                        onPressed: () => _onArticleClicked(
-                          articleModelList[articleIndex]!.articleNumber,
-                          articleModelList[articleIndex]!.articleSizeModelList,
-                          articleModelList[articleIndex]!,
-                          context,
-                        ),
-                        child: Card(
-                          elevation: 5,
-                          child: Padding(
-                            padding:
-                                EdgeInsets.all(SizeConfig.height8(context)),
-                            child: ArticleCardWidget(
-                              articleNumber:
-                                  articleModelList[articleIndex]!.articleNumber,
-                              totalColors: _calculateTotalColors(
-                                articleModelList[articleIndex]!
-                                    .articleSizeModelList,
-                              ),
-                              totalQuantity: _calculateTotalQuantity(
-                                articleModelList[articleIndex]!
-                                    .articleSizeModelList,
+                      return Padding(
+                        padding:
+                            EdgeInsets.only(top: SizeConfig.height8(context)),
+                        child: MaterialButton(
+                          onPressed: () => _onArticleClicked(
+                            articleModelList[articleIndex]!.articleNumber,
+                            articleModelList[articleIndex]!
+                                .articleSizeModelList,
+                            articleModelList[articleIndex]!,
+                            context,
+                          ),
+                          child: Card(
+                            elevation: 5,
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.all(SizeConfig.height8(context)),
+                              child: ArticleCardWidget(
+                                articleNumber: articleModelList[articleIndex]!
+                                    .articleNumber,
+                                totalColors: _calculateTotalColors(
+                                  articleModelList[articleIndex]!
+                                      .articleSizeModelList,
+                                ),
+                                totalQuantity: _calculateTotalQuantity(
+                                  articleModelList[articleIndex]!
+                                      .articleSizeModelList,
+                                ),
                               ),
                             ),
                           ),

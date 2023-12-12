@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const Color primaryColor = Color(0xff5e17eb);
 const Color whiteColor = Color(0xffffffff);
 const Color greyColor = Color(0xff4C6772);
 const Color lightGrey = Color(0xff93A4AA);
@@ -19,3 +20,4 @@ const Color orangeColor = Color(0xffff9933);
 const Color skyBlueColor = Color(0xff00ccff);
 const Color parrotColor = Color(0xff66ff33);
 const Color maroonColor = Color(0xff990000);
+Color appBarColor = primaryColor.withOpacity(0.8);

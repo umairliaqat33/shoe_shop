@@ -38,10 +38,13 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
           onPressed: () {
             setState(() {
               _selectedIndex = 1;
-              _fab = Colors.blue;
+              _fab = primaryColor;
             });
           },
           backgroundColor: _fab,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
           child: _selectedIndex == 1
               ? const Icon(
                   Icons.add,
@@ -69,7 +72,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
                     ? const Icon(
                         Icons.home,
                         size: 30,
-                        color: Colors.blue,
+                        color: primaryColor,
                       )
                     : const Icon(
                         Icons.home_outlined,
@@ -87,7 +90,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
                     ? const Icon(
                         Icons.person,
                         size: 30,
-                        color: Colors.blue,
+                        color: primaryColor,
                       )
                     : const Icon(
                         Icons.person_outline,
