@@ -39,9 +39,9 @@ class Utils {
 
   static String? quantityValidator(String? value) {
     if (value!.isEmpty) {
-      return "Please set a quantity";
+      return "i.e. 1 or 2";
     } else if (int.parse(value) <= 0) {
-      return "Quantity must be more then 0";
+      return "i.e. 1 or 2";
     } else {
       return null;
     }

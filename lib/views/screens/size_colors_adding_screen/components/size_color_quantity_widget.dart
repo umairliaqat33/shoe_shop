@@ -56,10 +56,11 @@ class _SizeColorQuantityWidgetState extends State<SizeColorQuantityWidget> {
               child: TextFormFieldWidget(
                 controller: widget.quantityController,
                 validator: (value) => Utils.quantityValidator(value),
-                label: "",
+                label: "Quantity",
                 inputAction: TextInputAction.done,
                 inputType: TextInputType.number,
                 hintText: "0",
+                isLabelGrey: true,
               ),
             ),
             Expanded(

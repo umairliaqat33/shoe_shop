@@ -11,7 +11,7 @@ import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/edit_profiles/edit_profile_screen.dart';
-import 'package:shoe_shop/views/screens/help_screen/help_screen.dart';
+import 'package:shoe_shop/views/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:shoe_shop/views/screens/profile_screen/components/info_card.dart';
 import 'package:shoe_shop/views/screens/profile_screen/components/tile_widget.dart';
 import 'package:shoe_shop/views/screens/settings_screen/settings_screen.dart';
@@ -87,12 +87,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leadingImg: Assets.settingsIcon,
           ),
           TileWidget(
-            text: "Help",
+            text: "Contact Us",
             trailingImg: Assets.arrowForwardHead,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => HelpScreen(
+                  builder: (context) => ContactUsScreen(
                     email: _userModel!.email,
                   ),
                 ),

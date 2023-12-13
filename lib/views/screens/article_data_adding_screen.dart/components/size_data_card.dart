@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
-import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
 
 class SizeDataCard extends StatelessWidget {
@@ -47,24 +46,27 @@ class SizeDataCard extends StatelessWidget {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CardColorLowerWidget(
+                            ColorContainerWidget(
                               color: Color(
                                 sizeModelList[sizeListIndex]
                                     .colorAndQuantityList[colorListIndex]
                                     .color,
                               ),
-                            ),
-                            Text(
-                              sizeModelList[sizeListIndex]
+                              quantity: sizeModelList[sizeListIndex]
                                   .colorAndQuantityList[colorListIndex]
-                                  .quantity
-                                  .toString(),
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                color: lightGrey,
-                              ),
-                            )
+                                  .quantity,
+                            ),
+                            // Text(
+                            //   sizeModelList[sizeListIndex]
+                            //       .colorAndQuantityList[colorListIndex]
+                            //       .quantity
+                            //       .toString(),
+                            //   style: const TextStyle(
+                            //     fontSize: 10,
+                            //     fontWeight: FontWeight.w600,
+                            //     color: lightGrey,
+                            //   ),
+                            // )
                           ],
                         );
                       },

@@ -35,28 +35,30 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _selectedIndex = 1;
-              _fab = primaryColor;
-            });
-          },
-          backgroundColor: _fab,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: _selectedIndex == 1
-              ? const Icon(
-                  Icons.add,
-                  size: 30,
-                  color: Colors.white,
-                )
-              : const Icon(
-                  Icons.add,
-                  color: greyColor,
+        floatingActionButton: MediaQuery.of(context).viewInsets.bottom == 0
+            ? FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    _selectedIndex = 1;
+                    _fab = primaryColor;
+                  });
+                },
+                backgroundColor: _fab,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
                 ),
-        ),
+                child: _selectedIndex == 1
+                    ? const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.white,
+                      )
+                    : const Icon(
+                        Icons.add,
+                        color: greyColor,
+                      ),
+              )
+            : null,
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: Row(

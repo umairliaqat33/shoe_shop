@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
-import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
 import 'package:shoe_shop/views/widgets/general_widgets/card_lable_and_data_widget.dart';
 import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
@@ -106,23 +105,17 @@ class ArticleDialogWidget extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    CardColorLowerWidget(
-                                        color: Color(
-                                            articleSizeModelList[sizeIndex]
-                                                .colorAndQuantityList[
-                                                    colorListIndex]
-                                                .color)),
-                                    Text(
-                                      articleSizeModelList[sizeIndex]
-                                          .colorAndQuantityList[colorListIndex]
-                                          .quantity
-                                          .toString(),
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
-                                        color: lightGrey,
+                                    ColorContainerWidget(
+                                      color: Color(
+                                        articleSizeModelList[sizeIndex]
+                                            .colorAndQuantityList[
+                                                colorListIndex]
+                                            .color,
                                       ),
-                                    )
+                                      quantity: articleSizeModelList[sizeIndex]
+                                          .colorAndQuantityList[colorListIndex]
+                                          .quantity,
+                                    ),
                                   ],
                                 );
                               },

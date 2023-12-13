@@ -18,7 +18,7 @@ class SizeColorNameWidget extends StatelessWidget {
       flex: 1,
       child: Row(
         children: [
-          CardColorLowerWidget(
+          ColorContainerWidget(
             color: Color(articleSizeColorModel.color),
           ),
           SizedBox(

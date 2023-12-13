@@ -88,9 +88,6 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Divider(
-                  color: lightGrey,
-                ),
                 TextFormFieldWidget(
                   controller: _articleController,
                   validator: (value) => Utils.simpleValidator(value),
@@ -98,6 +95,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                   hintText: "Enter your article name",
                   inputType: TextInputType.text,
                   inputAction: TextInputAction.done,
+                  maxLength: 20,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -108,15 +106,24 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                     "Select a Size",
                   ),
                 ),
-                DropdownMenu<String>(
-                  initialSelection: sizeList.first,
-                  onSelected: (String? value) => dropDownMenuOnChanged(value),
-                  dropdownMenuEntries: sizeList.map<DropdownMenuEntry<String>>(
-                    (String value) {
-                      return DropdownMenuEntry<String>(
-                          value: value, label: value);
-                    },
-                  ).toList(),
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: DropdownButton<String>(
+                    underline: Container(),
+                    value: sizeList.first,
+                    onChanged: (String? value) => dropDownMenuOnChanged(value),
+                    items:
+                        sizeList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
                 ),
                 Expanded(
                   child: _sizeArticleModelList.isEmpty

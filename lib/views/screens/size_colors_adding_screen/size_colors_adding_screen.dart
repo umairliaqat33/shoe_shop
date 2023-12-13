@@ -117,6 +117,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                     inputType: TextInputType.number,
                     inputAction: TextInputAction.next,
                     hintText: "i.e. 801",
+                    maxLength: 7,
                   ),
                   SizedBox(
                     height: SizeConfig.height8(context),
@@ -128,6 +129,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                     inputType: TextInputType.number,
                     inputAction: TextInputAction.done,
                     hintText: "i.e. 901",
+                    maxLength: 7,
                   ),
                   SizedBox(
                     height: SizeConfig.height8(context),
@@ -142,35 +144,24 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                   SizedBox(
                     height: SizeConfig.height8(context),
                   ),
-                  DropdownMenu<String>(
-                    initialSelection: colorList.first,
-                    onSelected: (String? value) {
-                      setState(() {
-                        _selectedItem = value!;
-                      });
-                      if (_selectedItem == 'Select a Color') {
-                        Fluttertoast.showToast(
-                            msg: "Please select a valid color");
-                        return;
-                      } else if (!_checkIfColorExist(_selectedItem)) {
-                        _articleSizeColorModelList.add(
-                          ArticleSizeColorModel(
-                            color: _checkColor(_selectedItem),
-                            quantity: 1,
-                            colorName: _selectedItem,
-                          ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: DropdownButton<String>(
+                      underline: Container(),
+                      value: colorList.first,
+                      onChanged: (String? value) => _dropDownButton(value),
+                      items: colorList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
                         );
-                      } else {
-                        Fluttertoast.showToast(msg: "Color already exist");
-                      }
-                      _quantityControllerList.add(TextEditingController());
-                      log(_selectedItem);
-                    },
-                    dropdownMenuEntries: colorList
-                        .map<DropdownMenuEntry<String>>((String value) {
-                      return DropdownMenuEntry<String>(
-                          value: value, label: value);
-                    }).toList(),
+                      }).toList(),
+                    ),
                   ),
                   SizedBox(
                     height: SizeConfig.height8(context),
@@ -189,9 +180,9 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                                 elevation: 5,
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                    left: SizeConfig.height8(context),
-                                    right: SizeConfig.height8(context),
-                                  ),
+                                      left: SizeConfig.height5(context),
+                                      right: SizeConfig.height5(context),
+                                      top: SizeConfig.height5(context)),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -203,8 +194,8 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                                       SizeColorQuantityWidget(
                                           quantityController:
                                               _quantityControllerList[index]),
-                                      IconButton(
-                                        onPressed: () {
+                                      GestureDetector(
+                                        onTap: () {
                                           _quantityControllerList
                                               .removeAt(index);
                                           _articleSizeColorModelList
@@ -213,7 +204,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                                           Fluttertoast.showToast(
                                               msg: "Color deleted");
                                         },
-                                        icon: const Icon(Icons.delete),
+                                        child: const Icon(Icons.delete),
                                       ),
                                     ],
                                   ),
@@ -237,6 +228,28 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
             )),
       ),
     );
+  }
+
+  void _dropDownButton(String? value) {
+    setState(() {
+      _selectedItem = value!;
+    });
+    if (_selectedItem == 'Select a Color') {
+      Fluttertoast.showToast(msg: "Please select a valid color");
+      return;
+    } else if (!_checkIfColorExist(_selectedItem)) {
+      _articleSizeColorModelList.add(
+        ArticleSizeColorModel(
+          color: _checkColor(_selectedItem),
+          quantity: 1,
+          colorName: _selectedItem,
+        ),
+      );
+    } else {
+      Fluttertoast.showToast(msg: "Color already exist");
+    }
+    _quantityControllerList.add(TextEditingController());
+    log(_selectedItem);
   }
 
   int _checkColor(String colorName) {

@@ -15,6 +15,8 @@ class TextFormFieldWidget extends StatelessWidget {
     this.textAlign = TextAlign.left,
     this.fieldEnabled = true,
     this.maxlines = 1,
+    this.maxLength,
+    this.isLabelGrey = false,
   });
   final TextEditingController controller;
   final String hintText;
@@ -25,6 +27,8 @@ class TextFormFieldWidget extends StatelessWidget {
   final TextAlign textAlign;
   final bool fieldEnabled;
   final int maxlines;
+  final int? maxLength;
+  final bool isLabelGrey;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +40,14 @@ class TextFormFieldWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   left: 3,
                 ),
-                child: Text(label),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: isLabelGrey ? lightGrey : blackColor,
+                    fontWeight: isLabelGrey ? FontWeight.w400 : null,
+                    fontSize: isLabelGrey ? 12 : null,
+                  ),
+                ),
               ),
         SizedBox(
           height: SizeConfig.height8(context),
@@ -49,6 +60,7 @@ class TextFormFieldWidget extends StatelessWidget {
           textAlign: textAlign,
           validator: validator,
           maxLines: maxlines,
+          maxLength: maxLength,
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: const EdgeInsets.all(

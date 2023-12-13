@@ -14,18 +14,18 @@ import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dar
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
-class HelpScreen extends StatefulWidget {
-  const HelpScreen({
+class ContactUsScreen extends StatefulWidget {
+  const ContactUsScreen({
     super.key,
     required this.email,
   });
   final String email;
 
   @override
-  State<HelpScreen> createState() => _HelpScreenState();
+  State<ContactUsScreen> createState() => _ContactUsScreenState();
 }
 
-class _HelpScreenState extends State<HelpScreen> {
+class _ContactUsScreenState extends State<ContactUsScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
@@ -42,7 +42,7 @@ class _HelpScreenState extends State<HelpScreen> {
             color: whiteColor,
           ),
           title: const Text(
-            "Help",
+            "Contact us",
             style: TextStyle(
               color: whiteColor,
               fontWeight: FontWeight.bold,
@@ -125,7 +125,10 @@ class _HelpScreenState extends State<HelpScreen> {
                             color: primaryColor,
                           ),
                         )
-                      : SizedBox(
+                      : Container(
+                          margin: EdgeInsets.only(
+                            bottom: SizeConfig.height10(context),
+                          ),
                           width: double.infinity,
                           child: RoundedButton(
                             buttonColor: primaryColor,
