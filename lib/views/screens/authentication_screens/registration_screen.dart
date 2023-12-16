@@ -32,8 +32,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _passController = TextEditingController();
   final _businessNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   bool _showSpinner = false;
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passController.dispose();
+    _businessNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

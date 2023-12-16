@@ -18,12 +18,10 @@ class SizeColorsAddingScreen extends StatefulWidget {
   const SizeColorsAddingScreen({
     super.key,
     required this.sizeName,
-    required this.articleSizeModelList,
-    this.index,
+    this.articleSizeModel,
   });
   final String sizeName;
-  final List<ArticleSizeModel> articleSizeModelList;
-  final int? index;
+  final ArticleSizeModel? articleSizeModel;
 
   @override
   State<SizeColorsAddingScreen> createState() => _SizeColorsAddingScreenState();
@@ -56,9 +54,19 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.index != null) {
+    if (widget.articleSizeModel != null) {
       _setValues();
     }
+  }
+
+  @override
+  void dispose() {
+    _salePriceController.dispose();
+    _purchasePriceController.dispose();
+    for (var element in _quantityControllerList) {
+      element.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -71,7 +79,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
           title: const Text('Add Size Data'),
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).pop(widget.articleSizeModelList);
+              Navigator.of(context).pop();
             },
             icon: const Icon(
               Icons.arrow_back,
@@ -297,60 +305,27 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
           _articleSizeColorModelList[i].quantity =
               int.parse(_quantityControllerList[i].text);
         }
-        if (widget.index == null) {
-          widget.articleSizeModelList.add(
-            ArticleSizeModel(
-              title: widget.sizeName,
-              colorAndQuantityList: _articleSizeColorModelList,
-              salePrice: int.parse(_salePriceController.text),
-              purchasePrice: int.parse(_purchasePriceController.text),
-            ),
-          );
-        } else {
-          if (widget.articleSizeModelList[widget.index!].colorAndQuantityList
-                  .length ==
-              _articleSizeColorModelList.length) {
-            widget.articleSizeModelList[widget.index!] = ArticleSizeModel(
-              title: widget.sizeName,
-              colorAndQuantityList: _articleSizeColorModelList,
-              salePrice: int.parse(_salePriceController.text),
-              purchasePrice: int.parse(_purchasePriceController.text),
-            );
-          } else {
-            widget.articleSizeModelList[widget.index!] = ArticleSizeModel(
-              title: widget.sizeName,
-              colorAndQuantityList: _articleSizeColorModelList,
-              salePrice: int.parse(_salePriceController.text),
-              purchasePrice: int.parse(_purchasePriceController.text),
-            );
-            widget.articleSizeModelList.add(
-              ArticleSizeModel(
-                title: widget.sizeName,
-                colorAndQuantityList: _articleSizeColorModelList,
-                salePrice: int.parse(_salePriceController.text),
-                purchasePrice: int.parse(_purchasePriceController.text),
-              ),
-            );
-          }
-        }
-        Navigator.of(context).pop(widget.articleSizeModelList);
-      } else {
-        Fluttertoast.showToast(msg: "Please add some colors");
       }
+      Navigator.of(context).pop(
+        ArticleSizeModel(
+          title: widget.sizeName,
+          colorAndQuantityList: _articleSizeColorModelList,
+          salePrice: int.parse(_salePriceController.text),
+          purchasePrice: int.parse(_purchasePriceController.text),
+        ),
+      );
+    } else {
+      Fluttertoast.showToast(msg: "Please add some colors");
     }
   }
 
   void _setValues() {
     _purchasePriceController.text =
-        widget.articleSizeModelList[widget.index!].purchasePrice.toString();
-    _salePriceController.text =
-        widget.articleSizeModelList[widget.index!].salePrice.toString();
-    _articleSizeColorModelList =
-        widget.articleSizeModelList[widget.index!].colorAndQuantityList;
+        widget.articleSizeModel!.purchasePrice.toString();
+    _salePriceController.text = widget.articleSizeModel!.salePrice.toString();
+    _articleSizeColorModelList = widget.articleSizeModel!.colorAndQuantityList;
     for (int i = 0;
-        i <
-            widget.articleSizeModelList[widget.index!].colorAndQuantityList
-                .length;
+        i < widget.articleSizeModel!.colorAndQuantityList.length;
         i++) {
       _quantityControllerList.add(TextEditingController());
     }

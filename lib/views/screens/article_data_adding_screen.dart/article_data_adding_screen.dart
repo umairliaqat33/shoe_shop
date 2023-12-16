@@ -9,6 +9,7 @@ import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
+import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
@@ -16,6 +17,7 @@ import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/componen
 import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/components/size_data_card.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:shoe_shop/views/screens/size_colors_adding_screen/size_colors_adding_screen.dart';
+import 'package:shoe_shop/views/widgets/alerts/add_another_article_alert.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
@@ -58,6 +60,13 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     if (widget.articleModel != null) {
       _setListValues();
     }
+  }
+
+  @override
+  void dispose() {
+    _customSizeController.dispose();
+    _articleController.dispose();
+    super.dispose();
   }
 
   @override
@@ -115,7 +124,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                   child: DropdownButton<String>(
                     underline: Container(),
                     value: sizeList.first,
-                    onChanged: (String? value) => dropDownMenuOnChanged(value),
+                    onChanged: (String? value) => dropDownButtonOnTap(value),
                     items:
                         sizeList.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
@@ -161,7 +170,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     );
   }
 
-  void dropDownMenuOnChanged(String? value) async {
+  void dropDownButtonOnTap(String? value) async {
     setState(() {
       selectedItem = value!;
     });
@@ -171,14 +180,13 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     if (selectedItem == 'Select a Size') {
       Fluttertoast.showToast(msg: "Please select a valid size");
       return;
-    } else if (_checkIfColorExists(selectedItem)) {
+    } else if (_checkIfSizeExists(selectedItem)) {
       Fluttertoast.showToast(msg: "Size already exists");
     } else if (selectedItem != 'Custom Size') {
       result = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => SizeColorsAddingScreen(
             sizeName: selectedItem,
-            articleSizeModelList: _sizeArticleModelList,
           ),
         ),
       );
@@ -192,21 +200,20 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
         },
       );
       selectedItem = _customSizeController.text;
-      if (_checkIfColorExists(selectedItem)) {
+      if (_checkIfSizeExists(selectedItem)) {
         Fluttertoast.showToast(msg: "Size already exists");
       } else if (str!.isNotEmpty) {
         result = await Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => SizeColorsAddingScreen(
               sizeName: str,
-              articleSizeModelList: _sizeArticleModelList,
             ),
           ),
         );
       }
     }
     if (result != null) {
-      _sizeArticleModelList = result;
+      _sizeArticleModelList.add(result);
       setState(() {});
     }
     log(selectedItem);
@@ -229,11 +236,27 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
             ),
           );
           Fluttertoast.showToast(msg: "Article data uploaded successfully");
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const BottomNavigationBarScreen(),
-            ),
-            (route) => false,
+          addAnotherArticle(
+            onYesTap: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const BottomNavigationBarScreen(
+                            screenIndex: 1,
+                          )),
+                  (route) => false);
+            },
+            onCancelTap: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const BottomNavigationBarScreen(
+                            screenIndex: 0,
+                          )),
+                  (route) => false);
+            },
+            context: context,
+            description: "Want to add another article?",
+            image: Assets.addAnotherArticle,
+            headingText: "Add More Articles",
           );
         }
       }
@@ -247,7 +270,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     });
   }
 
-  bool _checkIfColorExists(
+  bool _checkIfSizeExists(
     String value,
   ) {
     bool ifExist = false;

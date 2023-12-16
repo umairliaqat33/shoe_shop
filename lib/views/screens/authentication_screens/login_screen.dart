@@ -26,11 +26,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  // final AuthProvider _authProvider = AuthProvider();
   bool _showSpinner = false;
+
+  @override
+  void dispose() {
+    _passController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFormFieldWidget(
                     label: 'Email',
-                    controller: emailController,
+                    controller: _emailController,
                     validator: (value) => Utils.emailValidator(value),
                     hintText: "Johndoe@gmail.com",
                     inputType: TextInputType.emailAddress,
@@ -133,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       if (_formKey.currentState!.validate()) {
         userCredential = await authController.signIn(
-          emailController.text,
+          _emailController.text,
           _passController.text,
         );
         if (userCredential != null) {

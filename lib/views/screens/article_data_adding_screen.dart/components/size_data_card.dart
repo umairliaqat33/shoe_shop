@@ -4,30 +4,34 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
+import 'package:shoe_shop/views/screens/size_colors_adding_screen/size_colors_adding_screen.dart';
 
-class SizeDataCard extends StatelessWidget {
+class SizeDataCard extends StatefulWidget {
   const SizeDataCard({
     super.key,
     required this.sizeModelList,
     required this.deleteSize,
-    // required this.editSize,
   });
 
   final List<ArticleSizeModel> sizeModelList;
   final Function deleteSize;
-  // final Function editSize;
 
+  @override
+  State<SizeDataCard> createState() => _SizeDataCardState();
+}
+
+class _SizeDataCardState extends State<SizeDataCard> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: sizeModelList.length,
+        itemCount: widget.sizeModelList.length,
         itemBuilder: (BuildContext context, int sizeListIndex) {
           return Card(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  sizeModelList[sizeListIndex].title,
+                  widget.sizeModelList[sizeListIndex].title,
                   style: TextStyle(
                     fontSize: SizeConfig.font20(context),
                     fontWeight: FontWeight.w700,
@@ -38,9 +42,8 @@ class SizeDataCard extends StatelessWidget {
                     height: SizeConfig.height20(context) * 2,
                     child: ListView.builder(
                       reverse: true,
-                      itemCount: sizeModelList[sizeListIndex]
-                          .colorAndQuantityList
-                          .length,
+                      itemCount: widget.sizeModelList[sizeListIndex]
+                          .colorAndQuantityList.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int colorListIndex) {
                         return Column(
@@ -48,25 +51,14 @@ class SizeDataCard extends StatelessWidget {
                           children: [
                             ColorContainerWidget(
                               color: Color(
-                                sizeModelList[sizeListIndex]
-                                    .colorAndQuantityList[colorListIndex]
-                                    .color,
+                                widget.sizeModelList[sizeListIndex]
+                                    .colorAndQuantityList[colorListIndex].color,
                               ),
-                              quantity: sizeModelList[sizeListIndex]
+                              quantity: widget
+                                  .sizeModelList[sizeListIndex]
                                   .colorAndQuantityList[colorListIndex]
                                   .quantity,
                             ),
-                            // Text(
-                            //   sizeModelList[sizeListIndex]
-                            //       .colorAndQuantityList[colorListIndex]
-                            //       .quantity
-                            //       .toString(),
-                            //   style: const TextStyle(
-                            //     fontSize: 10,
-                            //     fontWeight: FontWeight.w600,
-                            //     color: lightGrey,
-                            //   ),
-                            // )
                           ],
                         );
                       },
@@ -81,14 +73,14 @@ class SizeDataCard extends StatelessWidget {
                         Icons.delete,
                       ),
                     ),
-                    // IconButton(
-                    //   onPressed: () => _editSize(
-                    //     sizeName: '',
-                    //     context: context,
-                    //     index: sizeListIndex,
-                    //   ),
-                    //   icon: const Icon(Icons.edit),
-                    // ),
+                    IconButton(
+                      onPressed: () => _editSize(
+                        context: context,
+                        articleSizeModel: widget.sizeModelList[sizeListIndex],
+                        index: sizeListIndex,
+                      ),
+                      icon: const Icon(Icons.edit),
+                    ),
                   ],
                 ),
               ],
@@ -97,26 +89,28 @@ class SizeDataCard extends StatelessWidget {
         });
   }
 
-  // void _editSize({
-  //   required String sizeName,
-  //   required BuildContext context,
-  //   required int index,
-  // }) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (context) => SizeColorsAddingScreen(
-  //         sizeName: sizeName,
-  //         articleSizeModelList: sizeModelList,
-  //         index: index,
-  //       ),
-  //     ),
-  //   );
-  //   editSize();
-  // }
+  Future<void> _editSize({
+    required ArticleSizeModel articleSizeModel,
+    required BuildContext context,
+    required int index,
+  }) async {
+    var result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SizeColorsAddingScreen(
+          sizeName: articleSizeModel.title,
+          articleSizeModel: articleSizeModel,
+        ),
+      ),
+    );
+    if (result != null) {
+      widget.sizeModelList[index] = result;
+    }
+    setState(() {});
+  }
 
   void _deleteArticleSize(int index) {
-    sizeModelList.removeAt(index);
+    widget.sizeModelList.removeAt(index);
     Fluttertoast.showToast(msg: "Size removed");
-    deleteSize();
+    widget.deleteSize();
   }
 }
