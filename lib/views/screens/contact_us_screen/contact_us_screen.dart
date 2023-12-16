@@ -93,7 +93,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       TextFormFieldWidget(
                         controller: _subjectController,
                         validator: (value) => Utils.subjectValidator(value),
-                        label: "Subjext",
+                        label: "Subject",
                         hintText: "Your reason for message",
                         inputAction: TextInputAction.next,
                         inputType: TextInputType.text,

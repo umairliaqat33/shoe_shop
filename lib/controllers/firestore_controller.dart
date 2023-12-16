@@ -44,6 +44,11 @@ class FirestoreController {
     return _firestoreRepository.getArticleStreamList();
   }
 
+  Stream<List<ArticleModel?>> getSearchResultArticleStreamList(
+      String searchValue) {
+    return _firestoreRepository.getFilteredArticleStreamList(searchValue);
+  }
+
   void deleteArticle(String id) {
     _firestoreRepository.deleteArticle(id);
   }

@@ -70,6 +70,28 @@ class FirestoreRepository {
         );
   }
 
+  Stream<List<ArticleModel?>> getFilteredArticleStreamList(
+    String searchValue,
+  ) {
+    return CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .collection(CollectionsNames.articleCollection)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => ArticleModel.fromJson(
+                  doc.data(),
+                ),
+              )
+              .where(
+                (element) => element.articleNumber.contains(searchValue),
+              )
+              .toList(),
+        );
+  }
+
   void deleteArticle(String id) {
     CollectionsNames.firestoreCollection
         .collection(CollectionsNames.usersCollection)

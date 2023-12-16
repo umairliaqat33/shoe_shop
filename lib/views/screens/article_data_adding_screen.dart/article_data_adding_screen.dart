@@ -75,6 +75,9 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: appBarColor,
+          iconTheme: const IconThemeData(
+            color: whiteColor,
+          ),
           elevation: 1,
           centerTitle: true,
           title: const Text(
