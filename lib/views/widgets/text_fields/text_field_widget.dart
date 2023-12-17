@@ -17,6 +17,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.maxlines = 1,
     this.maxLength,
     this.isLabelGrey = false,
+    this.autofocus = false,
   });
   final TextEditingController controller;
   final String hintText;
@@ -29,6 +30,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final int maxlines;
   final int? maxLength;
   final bool isLabelGrey;
+  final bool autofocus;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,6 +63,7 @@ class TextFormFieldWidget extends StatelessWidget {
           validator: validator,
           maxLines: maxlines,
           maxLength: maxLength,
+          autofocus: autofocus,
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: const EdgeInsets.all(

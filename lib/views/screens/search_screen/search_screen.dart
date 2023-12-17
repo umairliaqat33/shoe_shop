@@ -51,6 +51,7 @@ class SearchScreen extends StatelessWidget {
                   label: "",
                   hintText: "Enter article name to search",
                   inputAction: TextInputAction.search,
+                  autofocus: true,
                 ),
               ),
               SizedBox(
