@@ -20,6 +20,7 @@ class ColorContainerWidget extends StatelessWidget {
         left: 2.5,
         right: 2.5,
       ),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color,
         border: Border.all(

@@ -7,4 +7,5 @@ class AppStrings {
   static String emailInUse = 'email-already-in-use';
   static String driverNotRegistered = "Not Registered!";
   static String slogan = "Apka Godamm apkay mobile mai!";
+  static String userNotFound = 'user-not-found';
 }

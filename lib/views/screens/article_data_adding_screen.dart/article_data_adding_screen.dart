@@ -97,75 +97,82 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
           ),
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormFieldWidget(
-                  controller: _articleController,
-                  validator: (value) => Utils.simpleValidator(value),
-                  label: 'Article Name',
-                  hintText: "Enter your article name",
-                  inputType: TextInputType.text,
-                  inputAction: TextInputAction.done,
-                  maxLength: 20,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: SizeConfig.height8(context),
-                    bottom: SizeConfig.height8(context),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormFieldWidget(
+                    controller: _articleController,
+                    validator: (value) => Utils.simpleValidator(value),
+                    label: 'Article Name',
+                    hintText: "Enter your article name",
+                    inputType: TextInputType.text,
+                    inputAction: TextInputAction.done,
+                    maxLength: 20,
+                    autofocus: true,
                   ),
-                  child: const Text(
-                    "Select a Size",
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: SizeConfig.height8(context),
+                      bottom: SizeConfig.height8(context),
+                    ),
+                    child: const Text(
+                      "Select a Size",
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.circular(20),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: DropdownButton<String>(
+                      underline: Container(),
+                      value: sizeList.first,
+                      onChanged: (String? value) => dropDownButtonOnTap(value),
+                      items: sizeList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                  child: DropdownButton<String>(
-                    underline: Container(),
-                    value: sizeList.first,
-                    onChanged: (String? value) => dropDownButtonOnTap(value),
-                    items:
-                        sizeList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                Expanded(
-                  child: _sizeArticleModelList.isEmpty
-                      ? const Center(
-                          child: NoDataWidget(
-                            alertText: "No sizes selected yet!",
+                  _sizeArticleModelList.isEmpty
+                      ? SizedBox(
+                          height: SizeConfig.height20(context) * 17,
+                          child: const Center(
+                            child: NoDataWidget(
+                              alertText: "No sizes selected yet!",
+                            ),
                           ),
                         )
-                      : SizeDataCard(
-                          sizeModelList: _sizeArticleModelList,
-                          deleteSize: () => deleteArticleSetState(),
-                          // editSize: () => editArticleSetState(),
+                      : SizedBox(
+                          height: SizeConfig.height20(context) * 17,
+                          width: double.infinity,
+                          child: SizeDataCard(
+                            sizeModelList: _sizeArticleModelList,
+                            deleteSize: () => deleteArticleSetState(),
+                          ),
                         ),
-                ),
-                showLoader
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                        color: primaryColor,
-                      ))
-                    : Container(
-                        padding: EdgeInsets.only(
-                            bottom: SizeConfig.height15(context) + 1),
-                        width: double.infinity,
-                        child: RoundedButton(
-                          buttonColor: primaryColor,
-                          title: "Done",
-                          onPressed: () => _uploadArticleData(),
+                  showLoader
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ))
+                      : Container(
+                          padding: EdgeInsets.only(
+                              bottom: SizeConfig.height15(context) + 1),
+                          width: double.infinity,
+                          child: RoundedButton(
+                            buttonColor: primaryColor,
+                            title: "Done",
+                            onPressed: () => _uploadArticleData(),
+                          ),
                         ),
-                      ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

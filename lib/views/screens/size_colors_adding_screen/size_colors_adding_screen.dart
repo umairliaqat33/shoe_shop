@@ -94,144 +94,148 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
             ),
             child: Form(
               key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Size Name",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: blackColor,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Size Name",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: blackColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.height8(context),
-                  ),
-                  Text(
-                    widget.sizeName,
-                    style: TextStyle(
-                      fontSize: SizeConfig.font20(context),
-                      fontWeight: FontWeight.bold,
-                      color: blackColor,
+                    SizedBox(
+                      height: SizeConfig.height8(context),
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.height8(context),
-                  ),
-                  TextFormFieldWidget(
-                    controller: _purchasePriceController,
-                    validator: (value) => Utils.purchasePriceValidator(value),
-                    label: "Purchase Price",
-                    inputType: TextInputType.number,
-                    inputAction: TextInputAction.next,
-                    hintText: "i.e. 801",
-                    maxLength: 7,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.height8(context),
-                  ),
-                  TextFormFieldWidget(
-                    controller: _salePriceController,
-                    validator: (value) => Utils.salePriceValidator(value),
-                    label: "Sale Price",
-                    inputType: TextInputType.number,
-                    inputAction: TextInputAction.done,
-                    hintText: "i.e. 901",
-                    maxLength: 7,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.height8(context),
-                  ),
-                  const Text(
-                    "Please select a color",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: blackColor,
+                    Text(
+                      widget.sizeName,
+                      style: TextStyle(
+                        fontSize: SizeConfig.font20(context),
+                        fontWeight: FontWeight.bold,
+                        color: blackColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.height8(context),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1),
-                      borderRadius: BorderRadius.circular(20),
+                    SizedBox(
+                      height: SizeConfig.height8(context),
                     ),
-                    child: DropdownButton<String>(
-                      underline: Container(),
-                      value: colorList.first,
-                      onChanged: (String? value) => _dropDownButton(value),
-                      items: colorList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    TextFormFieldWidget(
+                      controller: _purchasePriceController,
+                      validator: (value) => Utils.purchasePriceValidator(value),
+                      label: "Purchase Price",
+                      inputType: TextInputType.number,
+                      inputAction: TextInputAction.next,
+                      hintText: "i.e. 801",
+                      maxLength: 7,
+                      autofocus: true,
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.height8(context),
-                  ),
-                  Expanded(
-                    child: _articleSizeColorModelList.isEmpty
-                        ? const Center(
-                            child: NoDataWidget(
-                              alertText: "No colors selected yet!",
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: _articleSizeColorModelList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                elevation: 5,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: SizeConfig.height5(context),
-                                      right: SizeConfig.height5(context),
-                                      top: SizeConfig.height5(context)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizeColorNameWidget(
-                                        articleSizeColorModel:
-                                            _articleSizeColorModelList[index],
-                                      ),
-                                      SizeColorQuantityWidget(
-                                          quantityController:
-                                              _quantityControllerList[index]),
-                                      GestureDetector(
-                                        onTap: () {
-                                          _quantityControllerList
-                                              .removeAt(index);
-                                          _articleSizeColorModelList
-                                              .removeAt(index);
-                                          setState(() {});
-                                          Fluttertoast.showToast(
-                                              msg: "Color deleted");
-                                        },
-                                        child: const Icon(Icons.delete),
-                                      ),
-                                    ],
+                    SizedBox(
+                      height: SizeConfig.height8(context),
+                    ),
+                    TextFormFieldWidget(
+                      controller: _salePriceController,
+                      validator: (value) => Utils.salePriceValidator(value),
+                      label: "Sale Price",
+                      inputType: TextInputType.number,
+                      inputAction: TextInputAction.done,
+                      hintText: "i.e. 901",
+                      maxLength: 7,
+                    ),
+                    SizedBox(
+                      height: SizeConfig.height8(context),
+                    ),
+                    const Text(
+                      "Please select a color",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: blackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.height8(context),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: DropdownButton<String>(
+                        underline: Container(),
+                        value: colorList.first,
+                        onChanged: (String? value) => _dropDownButton(value),
+                        items: colorList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.height8(context),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.height20(context) * 13,
+                      child: _articleSizeColorModelList.isEmpty
+                          ? const Center(
+                              child: NoDataWidget(
+                                alertText: "No colors selected yet!",
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: _articleSizeColorModelList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Card(
+                                  elevation: 5,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: SizeConfig.height5(context),
+                                        right: SizeConfig.height5(context),
+                                        top: SizeConfig.height5(context)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizeColorNameWidget(
+                                          articleSizeColorModel:
+                                              _articleSizeColorModelList[index],
+                                        ),
+                                        SizeColorQuantityWidget(
+                                            quantityController:
+                                                _quantityControllerList[index]),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _quantityControllerList
+                                                .removeAt(index);
+                                            _articleSizeColorModelList
+                                                .removeAt(index);
+                                            setState(() {});
+                                            Fluttertoast.showToast(
+                                                msg: "Color deleted");
+                                          },
+                                          child: const Icon(Icons.delete),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        bottom: SizeConfig.height15(context) + 1),
-                    width: double.infinity,
-                    child: RoundedButton(
-                      buttonColor: primaryColor,
-                      title: "Done",
-                      onPressed: () => _addArticleSize(),
+                                );
+                              },
+                            ),
                     ),
-                  ),
-                ],
+                    Container(
+                      padding: EdgeInsets.only(
+                          bottom: SizeConfig.height15(context) + 1),
+                      width: double.infinity,
+                      child: RoundedButton(
+                        buttonColor: primaryColor,
+                        title: "Done",
+                        onPressed: () => _addArticleSize(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )),
       ),

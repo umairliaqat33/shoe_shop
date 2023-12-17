@@ -28,4 +28,12 @@ class AuthController {
   void deleteUserAccountAndData() {
     _authRepository.deleteUserAccount();
   }
+
+  void resetPassword(String email) async {
+    try {
+      _authRepository.resetPassword(email);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

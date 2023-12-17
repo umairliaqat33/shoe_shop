@@ -68,4 +68,18 @@ class AuthRepository {
       return true;
     }
   }
+
+  void resetPassword(String email) async {
+    try {
+      await CollectionsNames.firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.userNotFound) {
+        throw UserNotFoundException('User not found');
+      } else if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException('Something went wrong ${e.code} ${e.message}');
+      }
+    }
+  }
 }

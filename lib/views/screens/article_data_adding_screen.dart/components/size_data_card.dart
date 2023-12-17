@@ -24,45 +24,41 @@ class _SizeDataCardState extends State<SizeDataCard> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        scrollDirection: Axis.vertical,
         itemCount: widget.sizeModelList.length,
         itemBuilder: (BuildContext context, int sizeListIndex) {
           return Card(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.sizeModelList[sizeListIndex].title,
-                  style: TextStyle(
-                    fontSize: SizeConfig.font20(context),
-                    fontWeight: FontWeight.w700,
+                Padding(
+                  padding: EdgeInsets.only(left: SizeConfig.width5(context)),
+                  child: Text(
+                    widget.sizeModelList[sizeListIndex].title,
+                    style: TextStyle(
+                      fontSize: SizeConfig.font20(context),
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-                Expanded(
-                  child: SizedBox(
-                    height: SizeConfig.height20(context) * 2,
-                    child: ListView.builder(
-                      reverse: true,
-                      itemCount: widget.sizeModelList[sizeListIndex]
-                          .colorAndQuantityList.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int colorListIndex) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ColorContainerWidget(
-                              color: Color(
-                                widget.sizeModelList[sizeListIndex]
-                                    .colorAndQuantityList[colorListIndex].color,
-                              ),
-                              quantity: widget
-                                  .sizeModelList[sizeListIndex]
-                                  .colorAndQuantityList[colorListIndex]
-                                  .quantity,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                SizedBox(
+                  width: SizeConfig.width20(context) * 8.22,
+                  height: SizeConfig.height20(context),
+                  child: ListView.builder(
+                    reverse: true,
+                    itemCount: widget.sizeModelList[sizeListIndex]
+                        .colorAndQuantityList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int colorListIndex) {
+                      return ColorContainerWidget(
+                        color: Color(
+                          widget.sizeModelList[sizeListIndex]
+                              .colorAndQuantityList[colorListIndex].color,
+                        ),
+                        quantity: widget.sizeModelList[sizeListIndex]
+                            .colorAndQuantityList[colorListIndex].quantity,
+                      );
+                    },
                   ),
                 ),
                 Row(

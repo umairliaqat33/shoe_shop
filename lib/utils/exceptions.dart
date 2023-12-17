@@ -39,3 +39,9 @@ class StoragePermissionDeniedPermanently implements Exception {
 
   StoragePermissionDeniedPermanently(this.message);
 }
+
+class UserNotFoundException implements Exception {
+  final String message;
+
+  UserNotFoundException(this.message);
+}

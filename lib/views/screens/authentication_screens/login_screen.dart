@@ -12,6 +12,7 @@ import 'package:shoe_shop/utils/assets.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/utils/utils.dart';
+import 'package:shoe_shop/views/screens/authentication_screens/forgot_password_screen.dart';
 import 'package:shoe_shop/views/screens/authentication_screens/registration_screen.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
@@ -73,6 +74,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: SizeConfig.height8(context),
                   ),
                   PasswordTextField(controller: _passController),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: SizeConfig.height8(context),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgotPasswordScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Forgot password?",
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: SizeConfig.height12(context),
                   ),
