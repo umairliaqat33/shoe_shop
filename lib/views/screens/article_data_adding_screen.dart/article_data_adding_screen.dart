@@ -129,7 +129,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                     child: DropdownButton<String>(
                       underline: Container(),
                       value: sizeList.first,
-                      onChanged: (String? value) => dropDownButtonOnTap(value),
+                      onChanged: (String? value) => _dropDownButtonOnTap(value),
                       items: sizeList
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
@@ -180,7 +180,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
     );
   }
 
-  void dropDownButtonOnTap(String? value) async {
+  void _dropDownButtonOnTap(String? value) async {
     setState(() {
       selectedItem = value!;
     });

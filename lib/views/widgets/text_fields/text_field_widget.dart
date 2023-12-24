@@ -18,6 +18,8 @@ class TextFormFieldWidget extends StatelessWidget {
     this.maxLength,
     this.isLabelGrey = false,
     this.autofocus = false,
+    this.suffixIconFunction,
+    this.suffixIcon,
   });
   final TextEditingController controller;
   final String hintText;
@@ -31,6 +33,8 @@ class TextFormFieldWidget extends StatelessWidget {
   final int? maxLength;
   final bool isLabelGrey;
   final bool autofocus;
+  final Function? suffixIconFunction;
+  final IconData? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -66,6 +70,15 @@ class TextFormFieldWidget extends StatelessWidget {
           autofocus: autofocus,
           decoration: InputDecoration(
             hintText: hintText,
+            suffixIcon: suffixIconFunction != null && suffixIcon != null
+                ? IconButton(
+                    onPressed: () => suffixIconFunction!(),
+                    icon: Icon(
+                      suffixIcon,
+                      color: primaryColor,
+                    ),
+                  )
+                : null,
             contentPadding: const EdgeInsets.all(
               10,
             ),

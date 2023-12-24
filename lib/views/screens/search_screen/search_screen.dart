@@ -15,10 +15,18 @@ import 'package:shoe_shop/views/screens/home_screen/components/article_dialog_wi
 import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 import 'package:shoe_shop/views/widgets/text_fields/text_field_widget.dart';
 
-class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchFieldcontroller = TextEditingController();
+
   final FirestoreController _firestoreController = FirestoreController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,8 +58,12 @@ class SearchScreen extends StatelessWidget {
                   validator: (value) => Utils.simpleValidator(value),
                   label: "",
                   hintText: "Enter article name to search",
-                  inputAction: TextInputAction.search,
+                  inputAction: TextInputAction.done,
                   autofocus: true,
+                  suffixIcon: Icons.search,
+                  suffixIconFunction: () {
+                    setState(() {});
+                  },
                 ),
               ),
               SizedBox(
