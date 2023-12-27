@@ -158,7 +158,7 @@ class _SizeColorsAddingScreenState extends State<SizeColorsAddingScreen> {
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         border: Border.all(width: 1),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: DropdownButton<String>(
                         underline: Container(),

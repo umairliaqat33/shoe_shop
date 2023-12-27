@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
@@ -6,23 +7,29 @@ import 'package:shoe_shop/views/screens/size_colors_adding_screen/components/siz
 import 'package:shoe_shop/views/screens/size_colors_adding_screen/components/size_color_quantity_widget.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 
-class SizeSalesDataAddingAlert extends StatelessWidget {
+class SizeSalesDataAddingAlert extends StatefulWidget {
   const SizeSalesDataAddingAlert({
     super.key,
-    required this.onDoneTap,
     required this.context,
     required this.description,
     required this.headingText,
     required this.colorModelList,
     required this.quantityControllerList,
+    required this.highQuantityBorderEnabled,
   });
-  final Function onDoneTap;
   final BuildContext context;
   final String description;
   final String headingText;
   final List<ArticleSizeColorModel> colorModelList;
   final List<TextEditingController> quantityControllerList;
+  final List<bool> highQuantityBorderEnabled;
 
+  @override
+  State<SizeSalesDataAddingAlert> createState() =>
+      _SizeSalesDataAddingAlertState();
+}
+
+class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -36,7 +43,7 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                headingText,
+                widget.headingText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: blackColor,
@@ -51,7 +58,7 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
                   right: SizeConfig.width15(context) + 3,
                 ),
                 child: Text(
-                  description,
+                  widget.description,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: lightGrey,
@@ -63,10 +70,20 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
               SizedBox(
                 height: SizeConfig.height20(context) * 10,
                 child: ListView.builder(
-                  itemCount: colorModelList.length,
+                  itemCount: widget.colorModelList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                       elevation: 5,
+                      shape: widget.highQuantityBorderEnabled[index]
+                          ? const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              side: BorderSide(
+                                color: redColor,
+                              ),
+                            )
+                          : null,
                       child: Padding(
                         padding: EdgeInsets.only(
                             left: SizeConfig.height5(context),
@@ -76,10 +93,12 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizeColorNameWidget(
-                              articleSizeColorModel: colorModelList[index],
+                              articleSizeColorModel:
+                                  widget.colorModelList[index],
                             ),
                             SizeColorQuantityWidget(
-                              quantityController: quantityControllerList[index],
+                              quantityController:
+                                  widget.quantityControllerList[index],
                             ),
                           ],
                         ),
@@ -99,11 +118,37 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
           width: SizeConfig.width20(context) * 4.7,
           child: RoundedButton(
             buttonColor: greyColor,
-            onPressed: () => onDoneTap(),
+            onPressed: () => _onDoneTap(),
             title: 'NO',
           ),
         ),
       ],
     );
+  }
+
+  void _onDoneTap() {
+    for (int i = 0; i < widget.colorModelList.length; i++) {
+      if (widget.colorModelList[i].quantity <
+          int.parse(widget.quantityControllerList[i].text)) {
+        widget.highQuantityBorderEnabled[i] = true;
+      }
+      if (widget.colorModelList[i].quantity >
+          int.parse(widget.quantityControllerList[i].text)) {
+        widget.highQuantityBorderEnabled[i] = false;
+      }
+      widget.colorModelList[i].quantity =
+          int.parse(widget.quantityControllerList[i].text);
+    }
+    bool isQuantityHigh = false;
+    for (var element in widget.highQuantityBorderEnabled) {
+      if (element) {
+        isQuantityHigh = true;
+      }
+    }
+    setState(() {});
+    if (isQuantityHigh) {
+      Fluttertoast.showToast(msg: "Sale quantity is high then actual quantity");
+      return;
+    }
   }
 }

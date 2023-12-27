@@ -4,11 +4,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
+import 'package:shoe_shop/services/media_service.dart';
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
@@ -31,6 +33,8 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
   final List<ArticleSizeModel> _soldSizes = [];
   String _selectedArticle = '';
   String _selectedSize = '';
+  DateTime? _saleDate;
+  final List<bool> _isHighQuantityBorderEnabled = [];
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +124,7 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           border: Border.all(width: 1),
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: DropdownButton<String>(
                           underline: Container(),
@@ -140,19 +144,34 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                       ),
                       Visibility(
                         visible: _selectedArticle.isNotEmpty,
-                        child: Column(
-                          children: [
-                            const Text(
-                              "Selected Article: ",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: lightGrey,
+                        child: Container(
+                          padding: EdgeInsets.all(
+                            SizeConfig.height5(context),
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: greyColor,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(
+                                10,
                               ),
                             ),
-                            Text(
-                              _selectedArticle,
-                            ),
-                          ],
+                          ),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Selected Article: ",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: lightGrey,
+                                ),
+                              ),
+                              Text(
+                                _selectedArticle,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -164,25 +183,71 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
               ),
               Visibility(
                 visible: _articlSizeModelList.isNotEmpty,
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: DropdownButton<String>(
-                    underline: Container(),
-                    value: _articlSizeDropDownList.first,
-                    onChanged: (String? value) =>
-                        _articleSizeDropdownClicked(value),
-                    items: _articlSizeDropDownList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: SizeConfig.width20(context) * 7.5,
+                          child: RoundedButton(
+                            buttonColor: primaryColor,
+                            title: "Select sale date",
+                            onPressed: () => _selectDate(),
+                          ),
+                        ),
+                        _saleDate == null
+                            ? const SizedBox()
+                            : Container(
+                                padding: EdgeInsets.all(
+                                  SizeConfig.height5(context),
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: greyColor,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  DateFormat.yMd().format(_saleDate!),
+                                  style: TextStyle(
+                                    color: primaryColor.withOpacity(0.9),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: SizeConfig.height8(context),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: DropdownButton<String>(
+                        underline: Container(),
+                        value: _articlSizeDropDownList.first,
+                        onChanged: (String? value) =>
+                            _articleSizeDropdownClicked(value),
+                        items: _articlSizeDropDownList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -326,20 +391,26 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
       colorQuantityListControllers.add(TextEditingController());
       colorQuantityListControllers[i].text =
           colorModelList[i].quantity.toString();
+      _isHighQuantityBorderEnabled.add(false);
     }
     var str = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return SizeSalesDataAddingAlert(
-          onDoneTap: () {},
           context: context,
           description: 'Please set sold quantities for every color',
           headingText: sizeName,
           colorModelList: colorModelList,
           quantityControllerList: colorQuantityListControllers,
+          highQuantityBorderEnabled: _isHighQuantityBorderEnabled,
         );
       },
     );
     log(str.toString());
+  }
+
+  Future<void> _selectDate() async {
+    _saleDate = await MediaService.datePicker(context);
+    setState(() {});
   }
 }

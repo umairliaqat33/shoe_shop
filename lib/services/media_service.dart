@@ -14,14 +14,13 @@ import 'package:shoe_shop/utils/strings.dart';
 
 class MediaService {
   static Future<DateTime?> datePicker(
-    bool isDateOfBirth,
     BuildContext context,
   ) {
     return showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: isDateOfBirth ? DateTime(1900) : DateTime.now(),
-            lastDate: isDateOfBirth ? DateTime.now() : DateTime(2030))
+            firstDate: DateTime(2023),
+            lastDate: DateTime.now())
         .then(
       (pickedDate) {
         if (pickedDate != null) {
