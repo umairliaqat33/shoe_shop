@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shoe_shop/config/size_config.dart';
+import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
+import 'package:shoe_shop/views/screens/size_colors_adding_screen/components/size_color_name_widget.dart';
+import 'package:shoe_shop/views/screens/size_colors_adding_screen/components/size_color_quantity_widget.dart';
 import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 
 class SizeSalesDataAddingAlert extends StatelessWidget {
@@ -10,11 +13,15 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
     required this.context,
     required this.description,
     required this.headingText,
+    required this.colorModelList,
+    required this.quantityControllerList,
   });
   final Function onDoneTap;
   final BuildContext context;
   final String description;
   final String headingText;
+  final List<ArticleSizeColorModel> colorModelList;
+  final List<TextEditingController> quantityControllerList;
 
   @override
   Widget build(BuildContext context) {
@@ -23,43 +30,66 @@ class SizeSalesDataAddingAlert extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(25)),
       ),
       backgroundColor: backgroundColor,
-      contentPadding: EdgeInsets.zero,
-      buttonPadding: EdgeInsets.zero,
-      content: ConstrainedBox(
-        constraints: BoxConstraints.tight(
-          Size(
-            (SizeConfig.width20(context) * 12.8),
-            (SizeConfig.height20(context) * 10),
-          ),
-        ),
-        child: Column(
-          children: [
-            Text(
-              headingText,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: blackColor,
-                fontWeight: FontWeight.w500,
-                fontSize: SizeConfig.font16(context),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: SizeConfig.height8(context),
-                left: SizeConfig.width15(context) + 3,
-                right: SizeConfig.width15(context) + 3,
-              ),
-              child: Text(
-                description,
+      content: Padding(
+        padding: EdgeInsets.only(top: SizeConfig.height8(context)),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                headingText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: lightGrey,
-                  fontWeight: FontWeight.w400,
-                  fontSize: SizeConfig.font16(context),
+                  color: blackColor,
+                  fontWeight: FontWeight.w700,
+                  fontSize: SizeConfig.font22(context),
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.only(
+                  top: SizeConfig.height8(context),
+                  left: SizeConfig.width15(context) + 3,
+                  right: SizeConfig.width15(context) + 3,
+                ),
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: lightGrey,
+                    fontWeight: FontWeight.w400,
+                    fontSize: SizeConfig.font16(context),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.height20(context) * 10,
+                child: ListView.builder(
+                  itemCount: colorModelList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: SizeConfig.height5(context),
+                            right: SizeConfig.height5(context),
+                            top: SizeConfig.height5(context)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizeColorNameWidget(
+                              articleSizeColorModel: colorModelList[index],
+                            ),
+                            SizeColorQuantityWidget(
+                              quantityController: quantityControllerList[index],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       actionsAlignment: MainAxisAlignment.spaceEvenly,

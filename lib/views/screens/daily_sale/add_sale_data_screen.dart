@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
+import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
 import 'package:shoe_shop/utils/colors.dart';
@@ -199,6 +200,7 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                         return GestureDetector(
                           onTap: () => _onSizeCardTap(
                             _soldSizes[sizeListIndex].title,
+                            _soldSizes[sizeListIndex].colorAndQuantityList,
                           ),
                           child: Card(
                             child: Row(
@@ -317,15 +319,24 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
 
   Future<void> _onSizeCardTap(
     String sizeName,
+    List<ArticleSizeColorModel> colorModelList,
   ) async {
+    final List<TextEditingController> colorQuantityListControllers = [];
+    for (int i = 0; i < colorModelList.length; i++) {
+      colorQuantityListControllers.add(TextEditingController());
+      colorQuantityListControllers[i].text =
+          colorModelList[i].quantity.toString();
+    }
     var str = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return SizeSalesDataAddingAlert(
           onDoneTap: () {},
           context: context,
-          description: '',
+          description: 'Please set sold quantities for every color',
           headingText: sizeName,
+          colorModelList: colorModelList,
+          quantityControllerList: colorQuantityListControllers,
         );
       },
     );
