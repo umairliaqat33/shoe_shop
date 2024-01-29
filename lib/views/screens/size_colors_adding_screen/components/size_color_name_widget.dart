@@ -8,9 +8,11 @@ class SizeColorNameWidget extends StatelessWidget {
   const SizeColorNameWidget({
     super.key,
     required this.articleSizeColorModel,
+    this.textNameVisibility = true,
   });
 
   final ArticleSizeColorModel articleSizeColorModel;
+  final bool textNameVisibility;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +29,11 @@ class SizeColorNameWidget extends StatelessWidget {
           Flexible(
             child: Text(
               articleSizeColorModel.colorName,
-              style: const TextStyle(
+              style: TextStyle(
                 overflow: TextOverflow.ellipsis,
+                fontSize: textNameVisibility
+                    ? SizeConfig.font20(context)
+                    : SizeConfig.font10(context),
               ),
             ),
           ),

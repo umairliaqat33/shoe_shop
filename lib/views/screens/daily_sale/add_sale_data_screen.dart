@@ -266,6 +266,7 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                           onTap: () => _onSizeCardTap(
                             _soldSizes[sizeListIndex].title,
                             _soldSizes[sizeListIndex].colorAndQuantityList,
+                            sizeListIndex,
                           ),
                           child: Card(
                             child: Row(
@@ -385,15 +386,17 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
   Future<void> _onSizeCardTap(
     String sizeName,
     List<ArticleSizeColorModel> colorModelList,
+    int index,
   ) async {
     final List<TextEditingController> colorQuantityListControllers = [];
+    _isHighQuantityBorderEnabled.clear();
     for (int i = 0; i < colorModelList.length; i++) {
       colorQuantityListControllers.add(TextEditingController());
       colorQuantityListControllers[i].text =
           colorModelList[i].quantity.toString();
       _isHighQuantityBorderEnabled.add(false);
     }
-    var str = await showDialog<String>(
+    var str = await showDialog<List<ArticleSizeColorModel>>(
       context: context,
       builder: (BuildContext context) {
         return SizeSalesDataAddingAlert(
@@ -406,7 +409,10 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
         );
       },
     );
-    log(str.toString());
+    if (str != null) {
+      _soldSizes[index].colorAndQuantityList = str;
+    }
+    setState(() {});
   }
 
   Future<void> _selectDate() async {

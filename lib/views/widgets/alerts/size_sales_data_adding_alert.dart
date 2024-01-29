@@ -37,6 +37,7 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
         borderRadius: BorderRadius.all(Radius.circular(25)),
       ),
       backgroundColor: backgroundColor,
+      contentPadding: const EdgeInsets.all(0),
       content: Padding(
         padding: EdgeInsets.only(top: SizeConfig.height8(context)),
         child: SingleChildScrollView(
@@ -93,6 +94,7 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizeColorNameWidget(
+                              textNameVisibility: false,
                               articleSizeColorModel:
                                   widget.colorModelList[index],
                             ),
@@ -100,6 +102,14 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
                               quantityController:
                                   widget.quantityControllerList[index],
                             ),
+                            IconButton(
+                                onPressed: () => _removeColor(
+                                      index: index,
+                                    ),
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: SizeConfig.height20(context),
+                                )),
                           ],
                         ),
                       ),
@@ -119,7 +129,7 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
           child: RoundedButton(
             buttonColor: greyColor,
             onPressed: () => _onDoneTap(),
-            title: 'NO',
+            title: 'DONE',
           ),
         ),
       ],
@@ -131,9 +141,9 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
       if (widget.colorModelList[i].quantity <
           int.parse(widget.quantityControllerList[i].text)) {
         widget.highQuantityBorderEnabled[i] = true;
-      }
-      if (widget.colorModelList[i].quantity >
-          int.parse(widget.quantityControllerList[i].text)) {
+      } else if (int.parse(widget.quantityControllerList[i].text) < 0) {
+        widget.highQuantityBorderEnabled[i] = true;
+      } else {
         widget.highQuantityBorderEnabled[i] = false;
       }
       widget.colorModelList[i].quantity =
@@ -143,6 +153,7 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
     for (var element in widget.highQuantityBorderEnabled) {
       if (element) {
         isQuantityHigh = true;
+        break;
       }
     }
     setState(() {});
@@ -150,5 +161,16 @@ class _SizeSalesDataAddingAlertState extends State<SizeSalesDataAddingAlert> {
       Fluttertoast.showToast(msg: "Sale quantity is high then actual quantity");
       return;
     }
+    Navigator.pop<List<ArticleSizeColorModel>>(context, widget.colorModelList);
+  }
+
+  void _removeColor({
+    required int index,
+  }) {
+    setState(() {
+      widget.highQuantityBorderEnabled.removeAt(index);
+      widget.colorModelList.removeAt(index);
+    });
+    Fluttertoast.showToast(msg: "Color Removed");
   }
 }

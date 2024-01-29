@@ -6,7 +6,7 @@ part 'article_size_model.g.dart';
 @JsonSerializable()
 class ArticleSizeModel {
   final String title;
-  final List<ArticleSizeColorModel> colorAndQuantityList;
+  List<ArticleSizeColorModel> colorAndQuantityList;
   final int salePrice;
   final int purchasePrice;
   ArticleSizeModel({
