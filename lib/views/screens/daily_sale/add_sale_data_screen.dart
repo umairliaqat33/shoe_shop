@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,10 @@ import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
+import 'package:shoe_shop/models/shoe_article_sold_model/shoe_article_sold_model.dart';
 import 'package:shoe_shop/services/media_service.dart';
 import 'package:shoe_shop/utils/colors.dart';
+import 'package:shoe_shop/utils/exceptions.dart';
 import 'package:shoe_shop/views/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/components/color_container_widget.dart';
 import 'package:shoe_shop/views/widgets/alerts/size_sales_data_adding_alert.dart';
@@ -35,6 +38,7 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
   String _selectedSize = '';
   DateTime? _saleDate;
   final List<bool> _isHighQuantityBorderEnabled = [];
+  bool _doneBtnSpinner = false;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +193,19 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: _saleDate == null
+                              ? BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                  border: Border.all(
+                                    color: redColor,
+                                  ),
+                                )
+                              : null,
                           width: SizeConfig.width20(context) * 7.5,
                           child: RoundedButton(
                             buttonColor: primaryColor,
@@ -283,37 +299,73 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: SizeConfig.width20(context) * 8.22,
-                                  height: SizeConfig.height20(context) * 2,
-                                  child: ListView.builder(
-                                    reverse: true,
-                                    itemCount: _soldSizes[sizeListIndex]
-                                        .colorAndQuantityList
-                                        .length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,
-                                        int colorListIndex) {
-                                      return ColorContainerWidget(
-                                        color: Color(
-                                          _soldSizes[sizeListIndex]
-                                              .colorAndQuantityList[
-                                                  colorListIndex]
-                                              .color,
-                                        ),
-                                        quantity: _soldSizes[sizeListIndex]
-                                            .colorAndQuantityList[
-                                                colorListIndex]
-                                            .quantity,
-                                      );
-                                    },
-                                  ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: SizeConfig.width20(context) * 8.22,
+                                      height: SizeConfig.height20(context) * 2,
+                                      child: ListView.builder(
+                                        reverse: true,
+                                        itemCount: _soldSizes[sizeListIndex]
+                                            .colorAndQuantityList
+                                            .length,
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (BuildContext context,
+                                            int colorListIndex) {
+                                          return ColorContainerWidget(
+                                            color: Color(
+                                              _soldSizes[sizeListIndex]
+                                                  .colorAndQuantityList[
+                                                      colorListIndex]
+                                                  .color,
+                                            ),
+                                            quantity: _soldSizes[sizeListIndex]
+                                                .colorAndQuantityList[
+                                                    colorListIndex]
+                                                .quantity,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => _removeSizeFromSoldSizeList(
+                                          sizeListIndex),
+                                      child: const Icon(Icons.delete),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
                         );
                       }),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      visible: _soldSizes.isNotEmpty,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: _doneBtnSpinner
+                            ? const CircularProgressIndicator(
+                                color: primaryColor,
+                              )
+                            : RoundedButton(
+                                buttonColor: primaryColor,
+                                title: "DONE",
+                                onPressed: () => _doneTap(),
+                              ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.height8(context),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -383,6 +435,11 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
     }
   }
 
+  void _removeSizeFromSoldSizeList(int index) {
+    _soldSizes.removeAt(index);
+    setState(() {});
+  }
+
   Future<void> _onSizeCardTap(
     String sizeName,
     List<ArticleSizeColorModel> colorModelList,
@@ -418,5 +475,36 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
   Future<void> _selectDate() async {
     _saleDate = await MediaService.datePicker(context);
     setState(() {});
+  }
+
+  void _doneTap() {
+    setState(() {
+      _doneBtnSpinner = true;
+    });
+    try {
+      if (_soldSizes.isNotEmpty && _saleDate != null) {
+        Timestamp timeStamp = Timestamp.fromDate(_saleDate!);
+        _firestoreController.uploadArticleSaleData(
+          ShoeArticleSoldModel(
+            saleDate: timeStamp,
+            soldArticleModel: ArticleModel(
+              articleNumber: _selectedArticle,
+              articleSizeModelList: _soldSizes,
+            ),
+          ),
+        );
+        Fluttertoast.showToast(msg: "Sale data uploaded successfully");
+        Navigator.of(context).pop();
+      } else {
+        Fluttertoast.showToast(msg: "Please select sale date");
+      }
+    } on UnknownException catch (e) {
+      Fluttertoast.showToast(msg: e.message);
+      log(e.toString());
+      Fluttertoast.showToast(msg: "Something went wrong please try again");
+    }
+    setState(() {
+      _doneBtnSpinner = false;
+    });
   }
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
+import 'package:shoe_shop/models/shoe_article_sold_model/shoe_article_sold_model.dart';
 import 'package:shoe_shop/models/user_model/user_model.dart';
 import 'package:shoe_shop/utils/collection_names.dart';
 import 'package:shoe_shop/utils/exceptions.dart';
@@ -159,5 +160,27 @@ class FirestoreRepository {
         .collection(CollectionsNames.usersCollection)
         .doc(_user!.uid)
         .delete();
+  }
+
+  void uploadSaleData(
+    ShoeArticleSoldModel soldShoeArticleModel,
+  ) {
+    try {
+      CollectionsNames.firestoreCollection
+          .collection(CollectionsNames.usersCollection)
+          .doc(_user!.uid)
+          .collection(CollectionsNames.soldArticleCollection)
+          .doc(soldShoeArticleModel.soldArticleModel.articleNumber)
+          .set(
+            soldShoeArticleModel.toJson(),
+          );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
   }
 }
