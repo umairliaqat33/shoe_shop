@@ -69,8 +69,11 @@ class _SearchScreenState extends State<SearchScreen> {
               SizedBox(
                 height: SizeConfig.height8(context),
               ),
-              SizedBox(
+              Container(
                 height: SizeConfig.height20(context) * 32,
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.height20(context) * 4,
+                ),
                 child: StreamBuilder(
                   stream: _firestoreController.getSearchResultArticleStreamList(
                       _searchFieldcontroller.text),

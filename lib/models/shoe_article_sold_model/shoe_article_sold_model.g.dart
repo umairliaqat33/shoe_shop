@@ -9,7 +9,8 @@ part of 'shoe_article_sold_model.dart';
 ShoeArticleSoldModel _$ShoeArticleSoldModelFromJson(
         Map<String, dynamic> json) =>
     ShoeArticleSoldModel(
-      saleDate: const TimestampConverter().fromJson(json['saleDate'] as int),
+      saleDate:
+          const TimestampConverter().fromJson(json['saleDate'] as Timestamp),
       soldArticleModel: ArticleModel.fromJson(
           json['soldArticleModel'] as Map<String, dynamic>),
     );

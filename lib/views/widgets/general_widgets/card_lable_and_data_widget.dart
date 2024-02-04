@@ -10,7 +10,7 @@ class CardLabelAndItemDataWidget extends StatelessWidget {
     required this.title,
   });
 
-  final int titleValue;
+  final String titleValue;
   final String title;
 
   @override

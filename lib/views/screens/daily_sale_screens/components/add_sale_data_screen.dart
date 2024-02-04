@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -22,8 +21,11 @@ import 'package:shoe_shop/views/widgets/buttons/round_button.dart';
 import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 
 class AddSaleDataScreen extends StatefulWidget {
-  const AddSaleDataScreen({super.key});
-
+  const AddSaleDataScreen({
+    super.key,
+    this.shoeArticleSoldModel,
+  });
+  final ShoeArticleSoldModel? shoeArticleSoldModel;
   @override
   State<AddSaleDataScreen> createState() => _AddSaleDataScreenState();
 }
@@ -33,12 +35,20 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
   final List<String> _articleDropDownList = ['Select an article'];
   List<ArticleSizeModel> _articlSizeModelList = [];
   final List<String> _articlSizeDropDownList = ['Select a size'];
-  final List<ArticleSizeModel> _soldSizes = [];
+  List<ArticleSizeModel> _soldSizes = [];
   String _selectedArticle = '';
   String _selectedSize = '';
   DateTime? _saleDate;
   final List<bool> _isHighQuantityBorderEnabled = [];
   bool _doneBtnSpinner = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.shoeArticleSoldModel != null) {
+      _setSoldArticleData(widget.shoeArticleSoldModel!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +143,8 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                         child: DropdownButton<String>(
                           underline: Container(),
                           value: _articleDropDownList.first,
-                          onChanged: (String? value) => _dropDownButtonOnTap(
+                          onChanged: (String? value) =>
+                              _articleDropDownButtonOnTap(
                             value,
                             _checkArticleModel(value!, articleModelList),
                           ),
@@ -375,7 +386,19 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
     );
   }
 
-  void _dropDownButtonOnTap(
+  void _setSoldArticleData(ShoeArticleSoldModel shoeArticleSoldModel) {
+    setState(() {
+      _saleDate = shoeArticleSoldModel.saleDate;
+      _selectedArticle = shoeArticleSoldModel.soldArticleModel.articleNumber;
+      _articlSizeModelList =
+          shoeArticleSoldModel.soldArticleModel.articleSizeModelList;
+      _soldSizes = shoeArticleSoldModel.soldArticleModel.articleSizeModelList;
+      _articlSizeDropDownList.clear();
+      _setArticleNames();
+    });
+  }
+
+  void _articleDropDownButtonOnTap(
     String? value,
     ArticleModel? articleModel,
   ) {
@@ -483,18 +506,22 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
     });
     try {
       if (_soldSizes.isNotEmpty && _saleDate != null) {
-        Timestamp timeStamp = Timestamp.fromDate(_saleDate!);
-        _firestoreController.uploadArticleSaleData(
-          ShoeArticleSoldModel(
-            saleDate: timeStamp,
-            soldArticleModel: ArticleModel(
-              articleNumber: _selectedArticle,
-              articleSizeModelList: _soldSizes,
-            ),
+        ShoeArticleSoldModel soldArticleData = ShoeArticleSoldModel(
+          saleDate: _saleDate!,
+          soldArticleModel: ArticleModel(
+            articleNumber: _selectedArticle,
+            articleSizeModelList: _soldSizes,
           ),
         );
+        widget.shoeArticleSoldModel == null
+            ? _firestoreController.uploadArticleSaleData(
+                soldArticleData,
+              )
+            : _firestoreController.updateArticleSaleData(
+                soldArticleData,
+              );
         Fluttertoast.showToast(msg: "Sale data uploaded successfully");
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(soldArticleData);
       } else {
         Fluttertoast.showToast(msg: "Please select sale date");
       }

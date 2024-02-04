@@ -6,8 +6,8 @@ import 'package:shoe_shop/views/screens/home_screen/components/color_container_w
 import 'package:shoe_shop/views/widgets/general_widgets/card_lable_and_data_widget.dart';
 import 'package:shoe_shop/views/widgets/general_widgets/no_data_widget.dart';
 
-class ArticleDialogWidget extends StatelessWidget {
-  const ArticleDialogWidget({
+class SoldArticleDialogWidget extends StatelessWidget {
+  const SoldArticleDialogWidget({
     super.key,
     required this.articleSizeModelList,
     required this.articleName,

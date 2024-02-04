@@ -108,4 +108,36 @@ class FirestoreController {
       }
     }
   }
+
+  void updateArticleSaleData(
+    ShoeArticleSoldModel soldShoeArticleModel,
+  ) async {
+    try {
+      _firestoreRepository.updateSaleData(soldShoeArticleModel);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
+  }
+
+  void deleteArticleSaleData(String id) {
+    _firestoreRepository.deleteSaleData(id);
+  }
+
+  Stream<List<ShoeArticleSoldModel>?> getSoldShoeArticleStreamList() {
+    try {
+      return _firestoreRepository.getSoldArticleStreamList();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
+  }
 }

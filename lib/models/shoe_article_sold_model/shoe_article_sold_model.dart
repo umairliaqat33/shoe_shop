@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shoe_shop/models/shoe_article_model/article_model.dart';
+import 'package:shoe_shop/models/timestamp_converter/timestamp_converter.dart';
 
 part 'shoe_article_sold_model.g.dart';
 
 @JsonSerializable()
 class ShoeArticleSoldModel {
-  @TimestampConverter() // Apply the custom converter here
-  final Timestamp saleDate;
+  @TimestampConverter()
+  DateTime saleDate;
   final ArticleModel soldArticleModel;
 
   ShoeArticleSoldModel({
@@ -19,14 +20,4 @@ class ShoeArticleSoldModel {
       _$ShoeArticleSoldModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ShoeArticleSoldModelToJson(this);
-}
-
-class TimestampConverter implements JsonConverter<Timestamp, int> {
-  const TimestampConverter();
-
-  @override
-  Timestamp fromJson(int json) => Timestamp.fromMillisecondsSinceEpoch(json);
-
-  @override
-  int toJson(Timestamp object) => object.millisecondsSinceEpoch;
 }

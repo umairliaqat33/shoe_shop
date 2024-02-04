@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:shoe_shop/utils/colors.dart';
 import 'package:shoe_shop/views/screens/article_data_adding_screen.dart/article_data_adding_screen.dart';
-import 'package:shoe_shop/views/screens/daily_sale/daily_sale_screen.dart';
+import 'package:shoe_shop/views/screens/daily_sale_screens/daily_sale_screen.dart';
 import 'package:shoe_shop/views/screens/home_screen/home_screen.dart';
 import 'package:shoe_shop/views/screens/profile_screen/profile_screen.dart';
 import 'package:shoe_shop/views/screens/search_screen/search_screen.dart';

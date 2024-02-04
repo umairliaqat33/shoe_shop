@@ -183,4 +183,52 @@ class FirestoreRepository {
       }
     }
   }
+
+  void updateSaleData(
+    ShoeArticleSoldModel soldShoeArticleModel,
+  ) {
+    try {
+      CollectionsNames.firestoreCollection
+          .collection(CollectionsNames.usersCollection)
+          .doc(_user!.uid)
+          .collection(CollectionsNames.soldArticleCollection)
+          .doc(soldShoeArticleModel.soldArticleModel.articleNumber)
+          .update(
+            soldShoeArticleModel.toJson(),
+          );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == AppStrings.noInternet) {
+        throw SocketException("${e.code}${e.message}");
+      } else {
+        throw UnknownException(
+            "${AppStrings.wentWrong} ${e.code} ${e.message}");
+      }
+    }
+  }
+
+  void deleteSaleData(String id) {
+    CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .collection(CollectionsNames.soldArticleCollection)
+        .doc(id)
+        .delete();
+  }
+
+  Stream<List<ShoeArticleSoldModel>?> getSoldArticleStreamList() {
+    return CollectionsNames.firestoreCollection
+        .collection(CollectionsNames.usersCollection)
+        .doc(_user!.uid)
+        .collection(CollectionsNames.soldArticleCollection)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => ShoeArticleSoldModel.fromJson(
+                  doc.data(),
+                ),
+              )
+              .toList(),
+        );
+  }
 }

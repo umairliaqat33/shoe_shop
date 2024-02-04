@@ -38,11 +38,10 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         body: SafeArea(
-          child: Container(
+          child: Padding(
             padding: EdgeInsets.only(
-              bottom: SizeConfig.height20(context) * 2,
+              bottom: SizeConfig.height20(context),
             ),
-            height: SizeConfig.height20(context) * 30,
             child: StreamBuilder<List<ArticleModel?>>(
                 stream: _firestoreController.getArticleStreamList(),
                 builder: (context, snapshot) {
