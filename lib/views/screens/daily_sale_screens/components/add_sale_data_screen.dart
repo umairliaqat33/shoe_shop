@@ -507,6 +507,7 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
     try {
       if (_soldSizes.isNotEmpty && _saleDate != null) {
         ShoeArticleSoldModel soldArticleData = ShoeArticleSoldModel(
+          docId: "$_selectedArticle ${DateFormat.yMMMd().format(_saleDate!)}",
           saleDate: _saleDate!,
           soldArticleModel: ArticleModel(
             articleNumber: _selectedArticle,

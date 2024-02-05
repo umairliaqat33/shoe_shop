@@ -59,13 +59,6 @@ class _DailySaleScreenState extends State<DailySaleScreen> {
         body: StreamBuilder<List<ShoeArticleSoldModel>?>(
           stream: _firestoreController.getSoldShoeArticleStreamList(),
           builder: (BuildContext context, snapshot) {
-            if (!snapshot.hasData) {
-              const Center(
-                child: NoDataWidget(
-                  alertText: "No sales added yet!",
-                ),
-              );
-            }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -73,6 +66,14 @@ class _DailySaleScreenState extends State<DailySaleScreen> {
                 ),
               );
             }
+            if (snapshot.data!.isEmpty) {
+              return const Center(
+                child: NoDataWidget(
+                  alertText: "No sales added yet!",
+                ),
+              );
+            }
+
             List<ShoeArticleSoldModel>? articleSoldModelList = snapshot.data;
 
             return ListView.builder(
@@ -82,20 +83,18 @@ class _DailySaleScreenState extends State<DailySaleScreen> {
                   padding: EdgeInsets.only(top: SizeConfig.height8(context)),
                   child: MaterialButton(
                     onPressed: () => _onItemClicked(
-                      shoeArticleSoldModel:
-                          articleSoldModelList[soldArticleIndex],
-                      articleName: articleSoldModelList[soldArticleIndex]
-                          .soldArticleModel
-                          .articleNumber,
-                    ),
+                        shoeArticleSoldModel:
+                            articleSoldModelList[soldArticleIndex],
+                        articleName:
+                            articleSoldModelList[soldArticleIndex].docId),
                     child: Card(
                       elevation: 5,
                       child: Padding(
                         padding: EdgeInsets.all(SizeConfig.height8(context)),
                         child: SoldArticleCardWidget(
                           articleNumber: articleSoldModelList[soldArticleIndex]
-                              .soldArticleModel
-                              .articleNumber,
+                              .docId
+                              .split(" ")[0],
                           saleDate:
                               articleSoldModelList[soldArticleIndex].saleDate,
                           totalQuantity: Calculations.calculateTotalQuantity(
@@ -120,6 +119,9 @@ class _DailySaleScreenState extends State<DailySaleScreen> {
     required ShoeArticleSoldModel shoeArticleSoldModel,
     required String articleName,
   }) {
+    for (int i = 0; i < articleName.split(" ").length; i++) {
+      log(articleName.split(" ")[i]);
+    }
     showDialog(
         context: context,
         builder: (BuildContext context) {

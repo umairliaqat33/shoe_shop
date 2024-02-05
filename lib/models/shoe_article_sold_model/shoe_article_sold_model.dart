@@ -10,10 +10,12 @@ class ShoeArticleSoldModel {
   @TimestampConverter()
   DateTime saleDate;
   final ArticleModel soldArticleModel;
+  final String docId;
 
   ShoeArticleSoldModel({
     required this.saleDate,
     required this.soldArticleModel,
+    required this.docId,
   });
 
   factory ShoeArticleSoldModel.fromJson(Map<String, dynamic> json) =>

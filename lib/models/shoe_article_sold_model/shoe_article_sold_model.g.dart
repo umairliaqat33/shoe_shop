@@ -13,6 +13,7 @@ ShoeArticleSoldModel _$ShoeArticleSoldModelFromJson(
           const TimestampConverter().fromJson(json['saleDate'] as Timestamp),
       soldArticleModel: ArticleModel.fromJson(
           json['soldArticleModel'] as Map<String, dynamic>),
+      docId: json['docId'] as String,
     );
 
 Map<String, dynamic> _$ShoeArticleSoldModelToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$ShoeArticleSoldModelToJson(
     <String, dynamic>{
       'saleDate': const TimestampConverter().toJson(instance.saleDate),
       'soldArticleModel': instance.soldArticleModel.toJson(),
+      'docId': instance.docId,
     };
