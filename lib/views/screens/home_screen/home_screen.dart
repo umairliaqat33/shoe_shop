@@ -141,6 +141,7 @@ class HomeScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => ArticleDataAddingScreen(
           articleModel: articleModel,
+          isEditting: true,
         ),
       ),
     );

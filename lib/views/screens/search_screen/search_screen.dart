@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_size_model/article_size_model.dart';
@@ -26,6 +27,13 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchFieldcontroller = TextEditingController();
 
   final FirestoreController _firestoreController = FirestoreController();
+  Stream<List<ArticleModel?>>? _articleSearchStream;
+  @override
+  void initState() {
+    super.initState();
+    _articleSearchStream = _firestoreController
+        .getSearchResultArticleStreamList(_searchFieldcontroller.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   label: "",
                   hintText: "Enter article name to search",
                   inputAction: TextInputAction.done,
-                  autofocus: true,
-                  suffixIcon: Icons.search,
-                  suffixIconFunction: () {
-                    setState(() {});
-                  },
+                  onChanged: (value) => _searchOnchaged(),
                 ),
               ),
               SizedBox(
@@ -75,8 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   bottom: SizeConfig.height20(context) * 4,
                 ),
                 child: StreamBuilder(
-                  stream: _firestoreController.getSearchResultArticleStreamList(
-                      _searchFieldcontroller.text),
+                  stream: _articleSearchStream,
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -179,6 +182,7 @@ class _SearchScreenState extends State<SearchScreen> {
       MaterialPageRoute(
         builder: (context) => ArticleDataAddingScreen(
           articleModel: articleModel,
+          isEditting: true,
         ),
       ),
     );
@@ -197,5 +201,11 @@ class _SearchScreenState extends State<SearchScreen> {
       log(e.toString());
       Fluttertoast.showToast(msg: "Article deletion failed");
     }
+  }
+
+  void _searchOnchaged() {
+    _articleSearchStream = _firestoreController
+        .getSearchResultArticleStreamList(_searchFieldcontroller.text);
+    setState(() {});
   }
 }

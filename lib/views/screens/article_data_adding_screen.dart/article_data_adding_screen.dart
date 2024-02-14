@@ -26,8 +26,10 @@ class ArticleDataAddingScreen extends StatefulWidget {
   const ArticleDataAddingScreen({
     super.key,
     this.articleModel,
+    this.isEditting = false,
   });
   final ArticleModel? articleModel;
+  final isEditting;
 
   @override
   State<ArticleDataAddingScreen> createState() =>
@@ -35,7 +37,7 @@ class ArticleDataAddingScreen extends StatefulWidget {
 }
 
 class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
-  final TextEditingController _articleController = TextEditingController();
+  final TextEditingController _articleNameController = TextEditingController();
   final TextEditingController _customSizeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool showLoader = false;
@@ -65,7 +67,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
   @override
   void dispose() {
     _customSizeController.dispose();
-    _articleController.dispose();
+    _articleNameController.dispose();
     super.dispose();
   }
 
@@ -88,21 +90,21 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
             ),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(
-            left: SizeConfig.width12(context) + 4,
-            right: SizeConfig.width12(context) + 4,
-            top: SizeConfig.width12(context) + 4,
-            bottom: SizeConfig.height20(context),
-          ),
-          child: Form(
-            key: _formKey,
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: SizeConfig.width12(context) + 4,
+              right: SizeConfig.width12(context) + 4,
+              top: SizeConfig.width12(context) + 4,
+              bottom: widget.isEditting ? 0 : SizeConfig.height20(context),
+            ),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormFieldWidget(
-                    controller: _articleController,
+                    controller: _articleNameController,
                     validator: (value) => Utils.simpleValidator(value),
                     label: 'Article Name',
                     hintText: "Enter your article name",
@@ -149,7 +151,9 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
                           ),
                         )
                       : SizedBox(
-                          height: SizeConfig.height20(context) * 17,
+                          height: widget.isEditting
+                              ? SizeConfig.height20(context) * 22
+                              : SizeConfig.height20(context) * 17,
                           width: double.infinity,
                           child: SizeDataCard(
                             sizeModelList: _sizeArticleModelList,
@@ -241,7 +245,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
         } else {
           firestoreController.uploadArticle(
             ArticleModel(
-              articleNumber: _articleController.text,
+              articleNumber: _articleNameController.text,
               articleSizeModelList: _sizeArticleModelList,
             ),
           );
@@ -294,7 +298,7 @@ class _ArticleDataAddingScreenState extends State<ArticleDataAddingScreen> {
 
   void _setListValues() {
     setState(() {
-      _articleController.text = widget.articleModel!.articleNumber;
+      _articleNameController.text = widget.articleModel!.articleNumber;
       _sizeArticleModelList = widget.articleModel!.articleSizeModelList;
     });
   }

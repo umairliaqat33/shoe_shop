@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
 import 'package:shoe_shop/models/article_color_model/article_size_color_model.dart';
@@ -127,6 +128,8 @@ class _AddSaleDataScreenState extends State<AddSaleDataScreen> {
                     );
                   }
                   List<ArticleModel?>? articleModelList = snapshot.data;
+                  _articleDropDownList.clear();
+                  _articleDropDownList.add('Select an article');
                   for (int i = 0; i < articleModelList!.length; i++) {
                     _articleDropDownList
                         .add(articleModelList[i]!.articleNumber);

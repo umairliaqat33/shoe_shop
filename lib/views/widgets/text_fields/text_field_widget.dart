@@ -20,6 +20,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.autofocus = false,
     this.suffixIconFunction,
     this.suffixIcon,
+    this.onChanged,
   });
   final TextEditingController controller;
   final String hintText;
@@ -35,6 +36,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final bool autofocus;
   final Function? suffixIconFunction;
   final IconData? suffixIcon;
+  final Function? onChanged;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -68,6 +70,7 @@ class TextFormFieldWidget extends StatelessWidget {
           maxLines: maxlines,
           maxLength: maxLength,
           autofocus: autofocus,
+          onChanged: (value) => onChanged == null ? null : onChanged!(value),
           decoration: InputDecoration(
             hintText: hintText,
             suffixIcon: suffixIconFunction != null && suffixIcon != null

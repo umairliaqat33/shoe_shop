@@ -2,9 +2,9 @@
 
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/material.dart';
 
 import 'package:shoe_shop/config/size_config.dart';
 import 'package:shoe_shop/controllers/firestore_controller.dart';
@@ -188,7 +188,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const BottomNavigationBarScreen(
-              screenIndex: 2,
+              screenIndex: 4,
             ),
           ),
           (route) => false,
